@@ -16,7 +16,7 @@ export default function Dashboard() {
       <NavigationBar />
 
       <Container>
-        <Outlet />
+        <Outlet/>
       </Container>
     </DashboardLayout>
   );
