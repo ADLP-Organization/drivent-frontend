@@ -6,7 +6,8 @@ export default function Input({ mask = '', maskChar = '', formatChars, variant =
   return (mask || maskChar) ? (
     <InputMask  mask={mask} maskChar={maskChar} value={value} onChange={onChange} {...(formatChars && { formatChars })}>
       {() => <StyledTextField {...props} variant={variant} />}
-    </InputMask>
+    </InputMask> 
+    
   ) : (
     <StyledTextField {...props} value={value} onChange={onChange} variant={variant} />
   );

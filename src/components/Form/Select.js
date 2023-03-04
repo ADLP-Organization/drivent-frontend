@@ -26,7 +26,7 @@ export default function MultiSelect({
     <FormControlWrapper>
       <FormControl variant="outlined">
         <InputLabel ref={inputLabelRef} htmlFor={id}>
-          {label}
+          {label} 
         </InputLabel>
         <Select
           value={value}
@@ -40,8 +40,8 @@ export default function MultiSelect({
               id={id}
             />
           }
-        >
-          {children}
+        > 
+          {children} 
         </Select>
       </FormControl>
     </FormControlWrapper>

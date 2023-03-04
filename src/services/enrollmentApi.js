@@ -1,12 +1,13 @@
+import { resolvePath } from 'react-router-dom';
 import api from './api';
 
 export async function save(body, token) {
+  console.log(body, token);
   const response = await api.post('/enrollments', body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-
   return response.data;
 }
 
@@ -16,7 +17,6 @@ export async function getPersonalInformations(token) {
       Authorization: `Bearer ${token}`,
     },
   });
-
   return response.data;
 }
 //
