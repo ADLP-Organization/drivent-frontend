@@ -1,7 +1,7 @@
-import BookTicketButton from '../../../components/Booking and Payments/BookingSummary';
+import OnlineTicketSummary from '../../../components/Ticket and Payment/OnlineTicketSummary';
 
 export default function Payment() {
   return (
-    <BookTicketButton/>
+    <OnlineTicketSummary/>
   );
 }

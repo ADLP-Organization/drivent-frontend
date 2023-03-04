@@ -1,12 +1,32 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { ticketAPI } from '../../services/ticketApi';
+import useToken from '../../hooks/useToken';
 
-export default function BookingSummary({ active }) {
+export default function OnlineTicketSummary({ active }) {
+  const navigate = useNavigate();
+  const token = useToken();
+  const body = {
+    ticketTypeId: ''
+  };
+
+  async function createTicket() {
+    try {
+      const result = await ticketAPI(body, token);
+      if (result.data) {
+        navigate('/payments');
+      }
+    } catch(err) {
+      alert(err);
+    }
+  }
+
   return (
     <>
       <Summary>
         <h2>Fechado! O total ficou em <strong>XXXXX</strong> agora é só confirmar.</h2>
       </Summary>
-      <Button active={active}>
+      <Button active={active} onClick={createTicket}>
         <h2>RESERVAR INGRESSO</h2>
       </Button>
     </>    
