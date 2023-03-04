@@ -1,14 +1,59 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import useEnrollment from '../../../hooks/api/useEnrollment';
 
 export default function Payment() {
+  const [enroll, setEnroll] = useState(false);
+  const { enrollment } = useEnrollment();
+
+  function confirmEnrollment() {
+    if(!enrollment) {
+      setEnroll(false);
+      console.log('oi');
+    } else {
+      setEnroll(true);
+      console.log('tchau');
+    }
+  }
+
   return (<Container>
     <Title>Ingresso e pagamento</Title>
-    <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
-    <TicketModel><ButtonChoice><TicketType>Presencial</TicketType><Price>R$ 250</Price></ButtonChoice> <ButtonChoice><TicketType>Online</TicketType><Price>R$ 100</Price></ButtonChoice></TicketModel>
+    <EnrollTrue enroll = {enroll}>
+      <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
+      <TicketModel><ButtonChoice><TicketType>Presencial</TicketType><Price>R$ 250</Price></ButtonChoice> <ButtonChoice><TicketType>Online</TicketType><Price>R$ 100</Price></ButtonChoice></TicketModel>
+    </EnrollTrue>
+    <EnrollFalse enroll = {enroll}>
+      <TextEnrollFalse>Você precisa completar sua inscrição antes
+        de prosseguir pra escolha de ingresso</TextEnrollFalse>
+    </EnrollFalse>
   </Container>);
 }
 
 const Container = styled.div`
+
+`;
+
+const EnrollTrue = styled.div`
+display: ${(prop) => (!prop.enroll? 'initial' : 'none')};
+`;
+
+const EnrollFalse = styled.div`
+width: 100%;
+display: ${(prop) => (!prop.enroll? 'none' : 'flex')};
+justify-content: center;
+color:#8E8E8E;
+`;
+
+const TextEnrollFalse = styled.div`
+margin-top: 206px;
+height: 46px;
+width: 388px;
+font-family: 'Roboto', sans-serif;
+font-size: 20px;
+font-weight: 400;
+line-height: 23px;
+letter-spacing: 0em;
+text-align: center;
 `;
 
 const Title = styled.div`
@@ -52,10 +97,12 @@ const ButtonChoice = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+ /*  background-color: #FFEED2; */
+;
   
 
 `;
-const Price =styled.div`
+const Price = styled.div`
 height: 16px;
 width: 46px;
 border-bottom: 3px;
