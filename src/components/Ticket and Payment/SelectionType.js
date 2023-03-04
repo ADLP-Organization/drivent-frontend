@@ -1,11 +1,24 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
 import useEnrollment from '../../hooks/api/useEnrollment';
+import useToken from '../../hooks/useToken';
+import { ticketType } from '../../services/ticketApi';
 
 export default function SelectionTicketType() {
+  const token = useToken();
   const [enroll, setEnroll] = useState(false);
   const { enrollment } = useEnrollment();
+
+  async function createTicket() {
+    try {
+      const result = await ticketType(token);
+      console.log(result);
+    } catch(err) {
+      alert(err);
+    }
+  }
+  createTicket();
 
   function confirmEnrollment() {
     if(!enrollment) {
