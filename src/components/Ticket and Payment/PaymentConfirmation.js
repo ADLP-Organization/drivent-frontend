@@ -1,40 +1,19 @@
 import styled from 'styled-components';
 import { FcOk } from 'react-icons/fc';
-import { getPaymentByTicketId } from '../../services/paymentApi';
-import useToken from '../../hooks/useToken';
-import { useState } from 'react';
 
 export default function PaymentConfirmation() {
-  const token = useToken();
-  const [isPaid, setIsPaid] = useState(false);
-  //context ticket.id
-  const ticketId = 1;
-
-  checkPayment();
-  async function checkPayment() {
-    try {
-      await getPaymentByTicketId(token, ticketId);
-      setIsPaid(true);    
-    } catch (err) {
-      console.log(err.message);
-      alert('Ops! Something went wrong.');
-    }
-  }
-
   return (
     <>
-      {isPaid &&
-        <Confirmation>
-          <h2>Pagamento</h2>
-          <BoxConfirmation>
-            <FcOk style={{ fontSize: '40px' }}/>
-            <Text>
-              <p><strong>Pagamento confirmado!</strong></p>
-              <p>Prossiga para escolha de hospedagem e/ou atividades</p>
-            </Text>  
-          </BoxConfirmation>         
-        </Confirmation> 
-      }      
+      <Confirmation>
+        <h2>Pagamento</h2>
+        <BoxConfirmation>
+          <FcOk style={{ fontSize: '40px' }}/>
+          <Text>
+            <p><strong>Pagamento confirmado!</strong></p>
+            <p>Prossiga para escolha de hospedagem e/ou atividades</p>
+          </Text>  
+        </BoxConfirmation>         
+      </Confirmation> 
     </>       
   );
 }
