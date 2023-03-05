@@ -1,22 +1,24 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ticketAPI } from '../../services/ticketApi';
+import { postTicketAPI } from '../../services/ticketApi';
 import useToken from '../../hooks/useToken';
 
 export default function OnlineTicketSummary({ active }) {
   const navigate = useNavigate();
   const token = useToken();
   const body = {
-    ticketTypeId: ''
+    ticketTypeId: 1
   };
 
   async function createTicket() {
     try {
-      const result = await ticketAPI(body, token);
-      if (result.data) {
-        navigate('/payments');
+      const result = await postTicketAPI(body, token);
+      if (result) {
+        console.log('deu bom');
+        navigate('dashboard/payments');
       }
     } catch(err) {
+      navigate('dashboard/payments');
       alert(err);
     }
   }
