@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useEnrollment from '../../hooks/api/useEnrollment';
 import useToken from '../../hooks/useToken';
 import { ticketType } from '../../services/ticketApi';
+import SelectionHotelType from './SelectionHotelOption';
+import TicketSummary from './TicketSummary';
 
 export default function SelectionTicketType() {
   const token = useToken();
   const [enroll, setEnroll] = useState(false);
   const { enrollment } = useEnrollment();
-
+  const [isPresential, setIsPresential] = useState(false);
+  const [isOnline, setOnline] = useState(false);
   async function createTicket() {
     try {
       const result = await ticketType(token);
@@ -30,16 +32,28 @@ export default function SelectionTicketType() {
     }
   }
 
+  function selectModality(modality) {
+    if(modality === 'Presential') {
+      setIsPresential(true); 
+      setOnline(false);
+    } else {
+      setIsPresential(false); 
+      setOnline(true);
+    } 
+  }
+
   return (<Container>
     <Title>Ingresso e pagamento</Title>
     <EnrollTrue enroll = {enroll}>
       <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
-      <TicketModel><ButtonChoice><TicketType>Presencial</TicketType><Price>R$ 250</Price></ButtonChoice> <ButtonChoice><TicketType>Online</TicketType><Price>R$ 100</Price></ButtonChoice></TicketModel>
+      <TicketModel><ButtonChoice   onClick={() => selectModality('Presential')} ><TicketType>Presencial</TicketType><Price>R$ 250</Price></ButtonChoice> <ButtonChoice onClick={() => selectModality('Online')}><TicketType>Online</TicketType><Price>R$ 100</Price></ButtonChoice></TicketModel>
     </EnrollTrue>
     <EnrollFalse enroll = {enroll}>
       <TextEnrollFalse>Você precisa completar sua inscrição antes
         de prosseguir pra escolha de ingresso</TextEnrollFalse>
     </EnrollFalse>
+    {isPresential? <SelectionHotelType/> : null}
+    {isOnline? <TicketSummary/> : null}
   </Container>);
 }
 
@@ -111,6 +125,7 @@ const ButtonChoice = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
  /*  background-color: #FFEED2; */
 ;
   
