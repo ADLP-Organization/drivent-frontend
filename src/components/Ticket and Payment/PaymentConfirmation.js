@@ -7,17 +7,17 @@ import { useState } from 'react';
 export default function PaymentConfirmation() {
   const token = useToken();
   const [isPaid, setIsPaid] = useState(false);
-  //context ticketid
+  //context ticket.id
   const ticketId = 1;
 
   checkPayment();
   async function checkPayment() {
     try {
-      const result = await getPaymentByTicketId(token, ticketId);
-      console.log(result);
-      setIsPaid(true);
+      await getPaymentByTicketId(token, ticketId);
+      setIsPaid(true);    
     } catch (err) {
-      alert('Ops! Something went wrong:', err.message);
+      console.log(err.message);
+      alert('Ops! Something went wrong.');
     }
   }
 

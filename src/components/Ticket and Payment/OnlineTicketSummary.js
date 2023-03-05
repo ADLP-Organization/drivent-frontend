@@ -7,18 +7,17 @@ export default function OnlineTicketSummary({ active }) {
   const navigate = useNavigate();
   const token = useToken();
   const body = {
-    ticketTypeId: 1
+    ticketTypeId: 1 //context ticketType.id
   };
+  const price = 1000; //context ticketType.price
 
   async function createTicket() {
     try {
       const result = await postTicketAPI(body, token);
       if (result) {
-        console.log('deu bom');
         navigate('dashboard/payments');
       }
     } catch(err) {
-      navigate('dashboard/payments');
       alert(err);
     }
   }
@@ -26,7 +25,7 @@ export default function OnlineTicketSummary({ active }) {
   return (
     <>
       <Summary>
-        <h2>Fechado! O total ficou em <strong>XXXXX</strong> agora é só confirmar.</h2>
+        <h2>Fechado! O total ficou em <strong>${price}</strong> agora é só confirmar.</h2>
       </Summary>
       <Button active={active} onClick={createTicket}>
         <h2>RESERVAR INGRESSO</h2>
