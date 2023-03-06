@@ -2,14 +2,26 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import TicketSummary from './TicketSummary';
 
-export default function SelectionHotelType() {
+export default function SelectionHotelType({ price, setTicketStatus, ticketTypeData }) {
   const [hotelOptonSelected, setHotelOptonSelected] = useState(null);
+
+  const hotelPrice = (price[2].price - price[1].price);
+  let newTicketTypeData = ticketTypeData;
+  function chooseOption(option) {
+    if(option === 'withHotel') {
+      setHotelOptonSelected(true);
+    } else {
+      setHotelOptonSelected(true);
+      newTicketTypeData = { ...price[1] };
+    }
+  }
 
   return (
     <>
       <TitleTicketModel>Ótimo! Agora escolha sua modalidade de hospedagem</TitleTicketModel>
-      <TicketModel><ButtonChoice onClick={() => setHotelOptonSelected(true)}><TicketType>Sem Hotel</TicketType><Price>+ R$ 0</Price></ButtonChoice> <ButtonChoice onClick={() => setHotelOptonSelected(true)} ><TicketType>Com Hotel</TicketType><Price>+ R$ 100</Price></ButtonChoice></TicketModel>
-      {hotelOptonSelected? <TicketSummary/>: null}
+      <TicketModel><ButtonChoice onClick={() => () => chooseOption('withoutHotel')}><TicketType>Sem Hotel</TicketType><Price>+ R$ 0</Price></ButtonChoice><ButtonChoice onClick={() => chooseOption('withHotel')} ><TicketType>Com Hotel</TicketType><Price>+ R$ {hotelPrice}</Price></ButtonChoice>
+      </TicketModel>
+      { hotelOptonSelected? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={newTicketTypeData}/>: null }
     </>);
 }
 

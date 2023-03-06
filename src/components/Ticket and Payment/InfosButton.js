@@ -1,14 +1,25 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function InfosButton({ price, isRemote, info }) {
+export default function InfosButton({ price, isRemote, info, options, setTicketTypeData }) {
   const [selectButton, setSelectButton] = useState(false);
-  function selectionType() {
+  function selectionType(isRemote) {
     setSelectButton(true);
+
+    if(!isRemote) {
+      options.setIsPresential(true);
+      options.setIsOnline(false);
+      setTicketTypeData(info);
+    } else {
+      options.setIsPresential(false);
+      options.setIsOnline(true);
+      setTicketTypeData(info);
+    }
   }
+
   return(
     <>
-      <ButtonChoice onClick={selectionType} selectButton ={selectButton}><TicketType>{(isRemote ? 'Online' : 'Presencial')}</TicketType><Price>R$ { price }</Price></ButtonChoice>
+      <ButtonChoice onClick={selectionType(isRemote)} selectButton ={selectButton}><TicketType>{(isRemote ? 'Online' : 'Presencial')}</TicketType><Price>R$ { price }</Price></ButtonChoice>
     </>
   );
 }

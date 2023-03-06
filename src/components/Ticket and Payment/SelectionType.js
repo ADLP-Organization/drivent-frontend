@@ -8,10 +8,12 @@ import InfosButton from './InfosButton';
 import SelectionHotelType from './SelectionHotelOption';
 import TicketSummary from './TicketSummary';
 
-export default function SelectionTicketType({ setTicketTypeData }) {
+export default function SelectionTicketType({ setTicketStatus, ticketTypeData, setTicketTypeData }) {
   const token = useToken();
   const [enroll, setEnroll] = useState(false);
   const [price, setPrice] = useState([]);
+  const [isPresential, setIsPresential] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
   const { enrollment } = useEnrollment();
   console.log(enrollment);
   useEffect(() => {
@@ -43,15 +45,15 @@ export default function SelectionTicketType({ setTicketTypeData }) {
     <EnrollTrue enroll={enroll}>
       <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
       <TicketModel>
-        {price.map((info) => <InfosButton key={info.id} price={info.price} isRemote ={info.isRemote} info = {info}/>)}
+        { price.map((info) => <InfosButton options={ { setIsPresential, setIsOnline } } setTicketTypeData={ setTicketTypeData } key={ info.id } price={ info.price } isRemote ={ info.isRemote } info = { info }/>) }
       </TicketModel>
     </EnrollTrue>
     <EnrollFalse enroll={enroll}>
       <TextEnrollFalse>Você precisa completar sua inscrição antes
         de prosseguir pra escolha de ingresso</TextEnrollFalse>
     </EnrollFalse>
-    {/* {isPresential? <SelectionHotelType/> : null}
-    {isOnline? <TicketSummary/> : null} */}
+    {isPresential? <SelectionHotelType price={price} setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData}/> : null}
+    {isOnline? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData}/> : null}
   </Container>);
 }
 
