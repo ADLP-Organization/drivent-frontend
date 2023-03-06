@@ -4,7 +4,7 @@ import SelectionTicketType from '../../../components/Ticket and Payment/Selectio
 export default function Payment() {
   return (<>
     <SelectionTicketType />
-    <OnlineTicketSummary />
+    {/* <OnlineTicketSummary /> */}
   </>
   );
 }
