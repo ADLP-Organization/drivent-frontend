@@ -5,14 +5,6 @@ export default function InfosButton({ price, isRemote, info }) {
   const [selectButton, setSelectButton] = useState(false);
   function selectionType() {
     setSelectButton(true);
-    /*  if(info.id === 1) {
-      console.log(info.id);
-      setSelectButton(true);
-    }
-    if(info.id === 2) {
-      console.log(info.id);
-      setSelectButton(true);
-    } */
   }
   return(
     <>
