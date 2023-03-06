@@ -6,7 +6,7 @@ import { ticketType } from '../../services/ticketApi';
 import SelectionHotelType from './SelectionHotelOption';
 import TicketSummary from './TicketSummary';
 
-export default function SelectionTicketType() {
+export default function SelectionTicketType({ setTicketTypeData }) {
   const token = useToken();
   const [enroll, setEnroll] = useState(false);
   const { enrollment } = useEnrollment();
@@ -15,6 +15,7 @@ export default function SelectionTicketType() {
   async function createTicket() {
     try {
       const result = await ticketType(token);
+      setTicketTypeData(result[0]);
       console.log(result);
     } catch(err) {
       alert(err);

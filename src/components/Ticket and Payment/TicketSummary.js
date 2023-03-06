@@ -1,24 +1,25 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { postTicketAPI } from '../../services/ticketApi';
 import useToken from '../../hooks/useToken';
 
-export default function TicketSummary({ active }) {
-  const navigate = useNavigate();
+export default function TicketSummary({ setTicketStatus, ticketTypeData }) {
   const token = useToken();
   const body = {
-    ticketTypeId: 1 //context ticketType.id
+    ticketTypeId: ticketTypeData.price
   };
-  const price = 1000; //context ticketType.price
+
+  const price = ticketTypeData.id;
+  console.log(ticketTypeData);
 
   async function createTicket() {
     try {
-      const result = await postTicketAPI(body, token);
-      if (result) {
-        navigate('dashboard/payments');
-      }
+      await postTicketAPI(body, token); 
+      setTicketStatus('reserved');      
+      toast('Informações salvas com sucesso!');      
     } catch(err) {
-      alert(err);
+      toast('Ops! Algo deu errado.');
+      console.log(err.message);
     }
   }
 
@@ -27,8 +28,8 @@ export default function TicketSummary({ active }) {
       <Summary>
         <h2>Fechado! O total ficou em <strong>R${price}</strong> agora é só confirmar.</h2>
       </Summary>
-      <Button active={active} onClick={createTicket}>
-        <span>RESERVAR INGRESSO</span>
+      <Button onClick={createTicket}>
+        <h2>RESERVAR INGRESSO</h2>
       </Button>
     </>    
   );
@@ -38,9 +39,6 @@ const Button = styled.button`
   width: 162px;
   height: 37px;
   border: none;
-  text-align: center;
-  line-height: 16px;
-  background-color: #E0E0E0;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   cursor: pointer;
