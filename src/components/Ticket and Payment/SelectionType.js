@@ -1,30 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useEnrollment from '../../hooks/api/useEnrollment';
 import useToken from '../../hooks/useToken';
 import { ticketType } from '../../services/ticketApi';
-import InfosButton from './InfosButton';
 import SelectionHotelType from './SelectionHotelOption';
 import TicketSummary from './TicketSummary';
 
-export default function SelectionTicketType({ setTicketTypeData }) {
+export default function SelectionTicketType({ setTicketStatus, ticketTypeData, setTicketTypeData }) {
   const token = useToken();
   const [enroll, setEnroll] = useState(false);
   const [info, setInfo] = useState([]);
   const [load, setLoad] = useState(false);
   const [selectButton1, setSelectButton1] = useState(false);
   const [selectButton2, setSelectButton2] = useState(false);
+  const [isPresential, setIsPresential] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
   const { enrollment } = useEnrollment();
   
   useEffect(() => {
     async function createTicket() {
       try {
         const result = await ticketType(token);
+        console.log('foi');
         setInfo(result);
         setLoad(true);
         console.log(result);
       } catch (err) {
+        console.log('não foi');
         setLoad(false);
       }
     }
@@ -46,12 +48,29 @@ export default function SelectionTicketType({ setTicketTypeData }) {
     setSelectButton1(true);
     setSelectButton2(false);
     console.log(selectButton1, selectButton2);
+    if(info[0].isRemote) {
+      setIsPresential(false);
+      setIsOnline(true);
+      setTicketTypeData(info[0]);
+    } else {
+      setIsPresential(true);
+      setIsOnline(false);
+    }
   }
 
   function selectionType2() {
     setSelectButton1(false);
     setSelectButton2(true);
     console.log(selectButton1, selectButton2);
+
+    if(info[0].isRemote) {
+      setIsPresential(false);
+      setIsOnline(true);
+      setTicketTypeData(info[0]);
+    } else {
+      setIsPresential(true);
+      setIsOnline(false);
+    }
   }
 
   if (info[0]) {
@@ -68,8 +87,8 @@ export default function SelectionTicketType({ setTicketTypeData }) {
         <TextEnrollFalse>Você precisa completar sua inscrição antes
           de prosseguir pra escolha de ingresso</TextEnrollFalse>
       </EnrollFalse>
-      {/* {isPresential? <SelectionHotelType/> : null}
-    {isOnline? <TicketSummary/> : null} */}
+      {isPresential? <SelectionHotelType info={info} setTicketStatus={setTicketStatus} setTicketTypeData={setTicketTypeData} ticketTypeData={ticketTypeData}/> : null}
+      {isOnline? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData}/> : null}
     </Container>);
   } else {
     return (<Container>
@@ -84,8 +103,6 @@ export default function SelectionTicketType({ setTicketTypeData }) {
         <TextEnrollFalse>Você precisa completar sua inscrição antes
           de prosseguir pra escolha de ingresso</TextEnrollFalse>
       </EnrollFalse>
-      {/* {isPresential? <SelectionHotelType/> : null}
-    {isOnline? <TicketSummary/> : null} */}
     </Container>);
   }
 }
