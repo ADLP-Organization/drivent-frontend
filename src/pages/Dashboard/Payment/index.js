@@ -3,13 +3,12 @@ import PaymentConfirmation from '../../../components/Ticket and Payment/PaymentC
 import SelectionTicketType from '../../../components/Ticket and Payment/SelectionType';
 import TicketSummary from '../../../components/Ticket and Payment/TicketSummary';
 import PaymentCredentials from '../PaymentCredentials';
+import TicketSelected from '../../../components/Ticket and Payment/TicketSelected';
+import styled from 'styled-components';
 
 export default function Payment() {
   const [ticketTypeData, setTicketTypeData] = useState(null);
   const [ticketStatus, setTicketStatus] = useState(null); //options: null, selected, reserved, paid
-
-  //Analice, quando fizer o post do pagamento, favor atualizar para setTicketStatus(paid)
-  //Quem fizer a seleção de modalidade/hotel, favor atualizar para setTicketStatus(selected)
 
   return (
     <>
@@ -35,16 +34,25 @@ export default function Payment() {
       }
       {ticketStatus === 'reserved' &&
         <>
+          <TicketSelected ticketTypeData={ticketTypeData} />
+          <TitlePayment>Pagamento</TitlePayment>
           <PaymentCredentials ticketTypeData = {ticketTypeData}/>
         </>
       }      
       {ticketStatus === 'paid' &&
         <>
-          <h1>substituir por componente de ingresso escolhido</h1>
-          <PaymentConfirmation/>
+          <TicketSelected
+            ticketTypeData={ticketTypeData}
+          />
+          <PaymentConfirmation />
         </>  
       }
     </>
-
   );
 }
+
+const TitlePayment = styled.div`
+margin-bottom: 21px;
+color: #8E8E8E;
+;
+`;
