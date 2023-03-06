@@ -23,7 +23,6 @@ export default function SelectionTicketType({ setTicketTypeData }) {
       } catch (err) {
         alert(err);
       }
-
     }
     createTicket();
 
@@ -39,7 +38,6 @@ export default function SelectionTicketType({ setTicketTypeData }) {
     confirmEnrollment();
   }, [enrollment]);
   
-
   return (<Container>
     <Title>Ingresso e pagamento</Title>
     <EnrollTrue enroll={enroll}>
@@ -52,8 +50,8 @@ export default function SelectionTicketType({ setTicketTypeData }) {
       <TextEnrollFalse>Você precisa completar sua inscrição antes
         de prosseguir pra escolha de ingresso</TextEnrollFalse>
     </EnrollFalse>
-    {isPresential? <SelectionHotelType/> : null}
-    {isOnline? <TicketSummary/> : null}
+    {/* {isPresential? <SelectionHotelType/> : null}
+    {isOnline? <TicketSummary/> : null} */}
   </Container>);
 }
 
