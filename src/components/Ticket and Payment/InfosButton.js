@@ -2,13 +2,17 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 export default function InfosButton({ price, isRemote, info }) {
-  const [selectButton, setSelectButton] = useState(false);
+  const [selectButton1, setSelectButton1] = useState(false);
+  const [selectButton2, setSelectButton2] = useState(false);
+  
   function selectionType() {
-    setSelectButton(true);
+    setSelectButton1(!selectButton1); 
+    setSelectButton2(!selectButton2);    
+    console.log('oi', selectButton1, selectButton2);
   }
   return(
     <>
-      <ButtonChoice onClick={selectionType} selectButton ={selectButton}><TicketType>{(isRemote ? 'Online' : 'Presencial')}</TicketType><Price>R$ { price }</Price></ButtonChoice>
+      <ButtonChoice onClick={selectionType} selectButton ={selectButton1}><TicketType>{(isRemote ? 'Online' : 'Presencial')}</TicketType><Price>R$ { price }</Price></ButtonChoice>
     </>
   );
 }
@@ -22,7 +26,7 @@ const ButtonChoice = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${(prop) => (!prop.selectButton ? '#FFFFFF' : '#FFEED2')}; 
+  background-color: ${(prop) => (!prop.selectButton1 ? '#FFFFFF' : '#FFEED2')}; 
 `;
 
 const Price = styled.div`
