@@ -5,15 +5,12 @@ import useToken from '../../hooks/useToken';
 
 export default function TicketSummary({ setTicketStatus, ticketTypeData }) {
   const token = useToken();
-  // const body = {
-  //   ticketTypeId: ticketTypeData.price
-  // };
-  // const price = ticketTypeData.id;
-  console.log(ticketTypeData);
   const body = {
-    ticketTypeId: 10000
+    ticketTypeId: ticketTypeData.price
   };
-  const price = 1;
+
+  const price = ticketTypeData.id;
+  console.log(ticketTypeData);
 
   async function createTicket() {
     try {
@@ -65,7 +62,9 @@ const Button = styled.button`
 `;
 
 const Summary = styled.div`
-  margin-bottom: 25px;
+  margin-top:37px;
+  margin-bottom: 17px;
+
 
   h2 {
     font-size: 20px;

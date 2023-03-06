@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import TicketSummary from '../../../components/Ticket and Payment/TicketSummary';
 import PaymentConfirmation from '../../../components/Ticket and Payment/PaymentConfirmation';
 import SelectionTicketType from '../../../components/Ticket and Payment/SelectionType';
+import TicketSummary from '../../../components/Ticket and Payment/TicketSummary';
 
 export default function Payment() {
   const [ticketTypeData, setTicketTypeData] = useState(null);
