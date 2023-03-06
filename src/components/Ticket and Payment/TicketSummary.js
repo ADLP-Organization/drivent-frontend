@@ -10,7 +10,6 @@ export default function TicketSummary({ setTicketStatus, ticketTypeData }) {
   };
 
   const price = ticketTypeData.price;
-  console.log(ticketTypeData);
 
   async function createTicket() {
     try {

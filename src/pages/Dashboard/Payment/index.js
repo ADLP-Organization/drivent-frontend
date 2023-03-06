@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PaymentConfirmation from '../../../components/Ticket and Payment/PaymentConfirmation';
 import SelectionTicketType from '../../../components/Ticket and Payment/SelectionType';
 import TicketSummary from '../../../components/Ticket and Payment/TicketSummary';
+import PaymentCredentials from '../PaymentCredentials';
 
 export default function Payment() {
   const [ticketTypeData, setTicketTypeData] = useState(null);
@@ -34,14 +35,13 @@ export default function Payment() {
       }
       {ticketStatus === 'reserved' &&
         <>
-          <h1>substituir por componente de ingresso escolhido</h1>
-          <h1>substituir por componente de pagamento - Analice</h1>
+          <PaymentCredentials ticketTypeData = {ticketTypeData}/>
         </>
       }      
       {ticketStatus === 'paid' &&
         <>
           <h1>substituir por componente de ingresso escolhido</h1>
-          <PaymentConfirmation />
+          <PaymentConfirmation/>
         </>  
       }
     </>
