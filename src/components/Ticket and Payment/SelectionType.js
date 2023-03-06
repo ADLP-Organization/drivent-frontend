@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import useEnrollment from '../../hooks/api/useEnrollment';
 import useToken from '../../hooks/useToken';
 import { ticketType } from '../../services/ticketApi';
-import InfosButton from './InfosButton';
 import SelectionHotelType from './SelectionHotelOption';
 import TicketSummary from './TicketSummary';
 
@@ -43,12 +42,14 @@ export default function SelectionTicketType({ setTicketTypeData }) {
   }, [enrollment]);
 
   function selectionType1() {
+    console.log(info[0]);
     setSelectButton1(true);
     setSelectButton2(false);
     console.log(selectButton1, selectButton2);
   }
 
   function selectionType2() {
+    console.log(info[1]);
     setSelectButton1(false);
     setSelectButton2(true);
     console.log(selectButton1, selectButton2);
