@@ -6,10 +6,10 @@ import useToken from '../../hooks/useToken';
 export default function TicketSummary({ setTicketStatus, ticketTypeData }) {
   const token = useToken();
   const body = {
-    ticketTypeId: ticketTypeData.price
+    ticketTypeId: ticketTypeData.id
   };
 
-  const price = ticketTypeData.id;
+  const price = ticketTypeData.price;
   console.log(ticketTypeData);
 
   async function createTicket() {
@@ -62,7 +62,7 @@ const Button = styled.button`
 `;
 
 const Summary = styled.div`
-  margin-top:37px;
+  margin-top:20px;
   margin-bottom: 17px;
 
 

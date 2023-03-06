@@ -21,12 +21,9 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
     async function createTicket() {
       try {
         const result = await ticketType(token);
-        console.log('foi');
         setInfo(result);
         setLoad(true);
-        console.log(result);
       } catch (err) {
-        console.log('não foi');
         setLoad(false);
       }
     }
@@ -35,10 +32,8 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
     function confirmEnrollment() {
       if (enrollment !== null) {
         setEnroll(false);
-        console.log('oi');
       } else {
         setEnroll(true);
-        console.log('tchau');
       }
     }
     confirmEnrollment();
@@ -47,7 +42,6 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
   function selectionType1() {
     setSelectButton1(true);
     setSelectButton2(false);
-    console.log(selectButton1, selectButton2);
     if(info[0].isRemote) {
       setIsPresential(false);
       setIsOnline(true);
@@ -61,7 +55,6 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
   function selectionType2() {
     setSelectButton1(false);
     setSelectButton2(true);
-    console.log(selectButton1, selectButton2);
 
     if(info[1].isRemote) {
       setIsPresential(false);
@@ -143,7 +136,7 @@ font-weight: 400;
 line-height: 40px;
 letter-spacing: 0em;
 text-align: left;
-margin-bottom: 37px;
+margin-bottom: 25px;
 `;
 
 const TitleTicketModel = styled.div`
@@ -156,7 +149,7 @@ line-height: 23px;
 letter-spacing: 0em;
 text-align: left;
 color: #8E8E8E;
-margin-bottom: 17px;
+margin-bottom: 20px;
 `;
 
 const TicketModel = styled.div`

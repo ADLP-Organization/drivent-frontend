@@ -4,10 +4,6 @@ import SelectionTicketType from '../../../components/Ticket and Payment/Selectio
 import TicketSummary from '../../../components/Ticket and Payment/TicketSummary';
 
 export default function Payment() {
-  //return (<>
-  //<SelectionTicketType />
-  //{/* <OnlineTicketSummary /> */}
-  //</>
   const [ticketTypeData, setTicketTypeData] = useState(null);
   const [ticketStatus, setTicketStatus] = useState(null); //options: null, selected, reserved, paid
 

@@ -30,7 +30,7 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
       setTicketTypeData(info[2]);
     } else {
       setHotelOptonSelected(true);
-      setTicketTypeData(info[1]);
+      setTicketTypeData(info[2]);
     }
   }
 
@@ -38,8 +38,8 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
     <>
       <TitleTicketModel>Ótimo! Agora escolha sua modalidade de hospedagem</TitleTicketModel>
       <TicketModel>
-        <ButtonChoice1 onClick={selectionType1} selectButton1={selectButton1}><TicketType>{(info[1].includeHotel ? 'Com Hotel' : 'Sem hotel')}</TicketType><Price>R$ { (info[1].includeHotel ? hotelPrice : 0) }</Price></ButtonChoice1>
-        <ButtonChoice2 onClick={selectionType2} selectButton2={selectButton2}><TicketType>{(info[2].includeHotel ? 'Com Hotel' : 'Sem hotel')}</TicketType><Price>R$ { (info[2].includeHotel ? hotelPrice : 0) }</Price></ButtonChoice2>
+        <ButtonChoice1 onClick={selectionType1} selectButton1={selectButton1}><TicketType>{(info[1].includesHotel ? 'Com Hotel' : 'Sem hotel')}</TicketType><Price>R$ { (info[1].includesHotel ? hotelPrice : 0) }</Price></ButtonChoice1>
+        <ButtonChoice2 onClick={selectionType2} selectButton2={selectButton2}><TicketType>{(info[2].includesHotel ? 'Com Hotel' : 'Sem hotel')}</TicketType><Price>R$ { (info[2].includesHotel ? hotelPrice : 0) }</Price></ButtonChoice2>
       </TicketModel>
       { hotelOptonSelected? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData}/>: null }
     </>);
@@ -47,7 +47,7 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
 
 const TitleTicketModel = styled.div`
 height: 23px;
-width: 411px;
+width: 500px;
 font-family: 'Roboto', sans-serif;
 font-size: 20px;
 font-weight: 400;
@@ -55,7 +55,8 @@ line-height: 23px;
 letter-spacing: 0em;
 text-align: left;
 color: #8E8E8E;
-margin-bottom: 17px;
+margin-top: 13px;
+margin-bottom: 20px;
 `;
 
 const TicketModel = styled.div`
