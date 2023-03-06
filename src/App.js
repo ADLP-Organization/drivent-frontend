@@ -20,6 +20,8 @@ import { EventInfoProvider } from './contexts/EventInfoContext';
 import { UserProvider } from './contexts/UserContext';
 
 import useToken from './hooks/useToken';
+import 'react-credit-cards';
+import PaymentCredentials from './pages/Dashboard/PaymentCredentials';
 
 export default function App() {
   return (
@@ -43,6 +45,7 @@ export default function App() {
               >
                 <Route path="subscription" element={<FillSubscription />} />
                 <Route path="payment" element={<Payment />} />
+                <Route path="payment-credentials" element={<PaymentCredentials />} />
                 <Route path="hotel" element={<Hotel />} />
                 <Route path="activities" element={<Activities />} />
                 <Route path="certificate" element={<Certificate />} />
