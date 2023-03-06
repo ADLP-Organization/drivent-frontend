@@ -5,8 +5,10 @@ import useEnrollment from '../../hooks/api/useEnrollment';
 import useToken from '../../hooks/useToken';
 import { ticketType } from '../../services/ticketApi';
 import InfosButton from './InfosButton';
+import SelectionHotelType from './SelectionHotelOption';
+import TicketSummary from './TicketSummary';
 
-export default function SelectionTicketType() {
+export default function SelectionTicketType({ setTicketTypeData }) {
   const token = useToken();
   const [enroll, setEnroll] = useState(false);
   const [price, setPrice] = useState([]);
@@ -21,6 +23,7 @@ export default function SelectionTicketType() {
       } catch (err) {
         alert(err);
       }
+
     }
     createTicket();
 
@@ -36,6 +39,7 @@ export default function SelectionTicketType() {
     confirmEnrollment();
   }, [enrollment]);
   
+
   return (<Container>
     <Title>Ingresso e pagamento</Title>
     <EnrollTrue enroll={enroll}>
@@ -48,6 +52,8 @@ export default function SelectionTicketType() {
       <TextEnrollFalse>Você precisa completar sua inscrição antes
         de prosseguir pra escolha de ingresso</TextEnrollFalse>
     </EnrollFalse>
+    {isPresential? <SelectionHotelType/> : null}
+    {isOnline? <TicketSummary/> : null}
   </Container>);
 }
 
