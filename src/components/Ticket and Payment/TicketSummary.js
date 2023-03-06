@@ -62,8 +62,9 @@ const Button = styled.button`
 `;
 
 const Summary = styled.div`
-margin-top:37px;
+  margin-top:37px;
   margin-bottom: 17px;
+
 
   h2 {
     font-size: 20px;
