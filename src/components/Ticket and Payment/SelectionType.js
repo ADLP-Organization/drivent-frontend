@@ -1,55 +1,54 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useEnrollment from '../../hooks/api/useEnrollment';
 import useToken from '../../hooks/useToken';
 import { ticketType } from '../../services/ticketApi';
+import InfosButton from './InfosButton';
 import SelectionHotelType from './SelectionHotelOption';
 import TicketSummary from './TicketSummary';
 
 export default function SelectionTicketType({ setTicketTypeData }) {
   const token = useToken();
   const [enroll, setEnroll] = useState(false);
+  const [price, setPrice] = useState([]);
   const { enrollment } = useEnrollment();
-  const [isPresential, setIsPresential] = useState(false);
-  const [isOnline, setOnline] = useState(false);
-  async function createTicket() {
-    try {
-      const result = await ticketType(token);
-      setTicketTypeData(result[0]);
-      console.log(result);
-    } catch(err) {
-      alert(err);
-    }
-  }
-  createTicket();
+  console.log(enrollment);
+  useEffect(() => {
+    async function createTicket() {
+      try {
+        const result = await ticketType(token);
+        setPrice(result);
+        console.log(result);
+      } catch (err) {
+        alert(err);
+      }
 
-  function confirmEnrollment() {
-    if(!enrollment) {
-      setEnroll(false);
-      console.log('oi');
-    } else {
-      setEnroll(true);
-      console.log('tchau');
     }
-  }
+    createTicket();
 
-  function selectModality(modality) {
-    if(modality === 'Presential') {
-      setIsPresential(true); 
-      setOnline(false);
-    } else {
-      setIsPresential(false); 
-      setOnline(true);
-    } 
-  }
+    function confirmEnrollment() {
+      if (enrollment !== null) {
+        setEnroll(false);
+        console.log('oi');
+      } else {
+        setEnroll(true);
+        console.log('tchau');
+      }
+    }
+    confirmEnrollment();
+  }, [enrollment]);
+  
 
   return (<Container>
     <Title>Ingresso e pagamento</Title>
-    <EnrollTrue enroll = {enroll}>
+    <EnrollTrue enroll={enroll}>
       <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
-      <TicketModel><ButtonChoice   onClick={() => selectModality('Presential')} ><TicketType>Presencial</TicketType><Price>R$ 250</Price></ButtonChoice> <ButtonChoice onClick={() => selectModality('Online')}><TicketType>Online</TicketType><Price>R$ 100</Price></ButtonChoice></TicketModel>
+      <TicketModel>
+        {price.map((info) => <InfosButton key={info.id} price={info.price} isRemote ={info.isRemote} info = {info}/>)}
+      </TicketModel>
     </EnrollTrue>
-    <EnrollFalse enroll = {enroll}>
+    <EnrollFalse enroll={enroll}>
       <TextEnrollFalse>Você precisa completar sua inscrição antes
         de prosseguir pra escolha de ingresso</TextEnrollFalse>
     </EnrollFalse>
@@ -63,12 +62,12 @@ const Container = styled.div`
 `;
 
 const EnrollTrue = styled.div`
-display: ${(prop) => (!prop.enroll? 'initial' : 'none')};
+display: ${(prop) => (!prop.enroll ? 'initial' : 'none')};
 `;
 
 const EnrollFalse = styled.div`
 width: 100%;
-display: ${(prop) => (!prop.enroll? 'none' : 'flex')};
+display: ${(prop) => (!prop.enroll ? 'none' : 'flex')};
 justify-content: center;
 color:#8E8E8E;
 `;
@@ -116,35 +115,3 @@ const TicketModel = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   `;
-
-const ButtonChoice = styled.div`
-  height: 145px;
-  width: 145px;
-  border: 1px solid #CECECE;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
- /*  background-color: #FFEED2; */
-;
-  
-
-`;
-const Price = styled.div`
-height: 16px;
-width: 46px;
-border-bottom: 3px;
-font-family: 'Roboto', sans-serif;
-font-size: 14px;
-font-weight: 100;
-line-height: 16px;
-letter-spacing: 0em;
-text-align: center;
-color: #898989;
-`;
-
-const TicketType = styled.div`
-
-`;
