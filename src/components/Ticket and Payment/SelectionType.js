@@ -16,7 +16,7 @@ export default function SelectionTicketType({ setTicketTypeData }) {
   const [selectButton1, setSelectButton1] = useState(false);
   const [selectButton2, setSelectButton2] = useState(false);
   const { enrollment } = useEnrollment();
-  console.log(enrollment);
+  
   useEffect(() => {
     async function createTicket() {
       try {
@@ -54,7 +54,7 @@ export default function SelectionTicketType({ setTicketTypeData }) {
     console.log(selectButton1, selectButton2);
   }
 
-  if (info !== []) {
+  if (info[0]) {
     return (<Container>
       <Title>Ingresso e pagamento</Title>
       <EnrollTrue enroll={enroll}>
@@ -62,6 +62,22 @@ export default function SelectionTicketType({ setTicketTypeData }) {
         <TicketModel info={info}>
           <ButtonChoice1 onClick={selectionType1} selectButton1={selectButton1}><TicketType>{(info[0].isRemote ? 'Online' : 'Presencial')}</TicketType><Price>R$ { info[0].price }</Price></ButtonChoice1>
           <ButtonChoice2 onClick={selectionType2} selectButton2={selectButton2}><TicketType>{(info[1].isRemote ? 'Online' : 'Presencial')}</TicketType><Price>R$ { info[1].price }</Price></ButtonChoice2>
+        </TicketModel>
+      </EnrollTrue>
+      <EnrollFalse enroll={enroll}>
+        <TextEnrollFalse>Você precisa completar sua inscrição antes
+          de prosseguir pra escolha de ingresso</TextEnrollFalse>
+      </EnrollFalse>
+      {/* {isPresential? <SelectionHotelType/> : null}
+    {isOnline? <TicketSummary/> : null} */}
+    </Container>);
+  } else {
+    return (<Container>
+      <Title>Ingresso e pagamento</Title>
+      <EnrollTrue enroll={enroll}>
+        <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
+        <TicketModel info={info}>
+          Loading...
         </TicketModel>
       </EnrollTrue>
       <EnrollFalse enroll={enroll}>
