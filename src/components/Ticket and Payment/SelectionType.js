@@ -63,7 +63,7 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
     setSelectButton2(true);
     console.log(selectButton1, selectButton2);
 
-    if(info[0].isRemote) {
+    if(info[1].isRemote) {
       setIsPresential(false);
       setIsOnline(true);
       setTicketTypeData(info[0]);
