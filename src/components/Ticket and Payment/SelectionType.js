@@ -1,27 +1,33 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useEnrollment from '../../hooks/api/useEnrollment';
 import useToken from '../../hooks/useToken';
 import { ticketType } from '../../services/ticketApi';
-import InfosButton from './InfosButton';
 import SelectionHotelType from './SelectionHotelOption';
 import TicketSummary from './TicketSummary';
 
-export default function SelectionTicketType({ setTicketTypeData }) {
+export default function SelectionTicketType({ setTicketStatus, ticketTypeData, setTicketTypeData }) {
   const token = useToken();
   const [enroll, setEnroll] = useState(false);
-  const [price, setPrice] = useState([]);
+  const [info, setInfo] = useState([]);
+  const [load, setLoad] = useState(false);
+  const [selectButton1, setSelectButton1] = useState(false);
+  const [selectButton2, setSelectButton2] = useState(false);
+  const [isPresential, setIsPresential] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
   const { enrollment } = useEnrollment();
-  console.log(enrollment);
+  
   useEffect(() => {
     async function createTicket() {
       try {
         const result = await ticketType(token);
-        setPrice(result);
+        console.log('foi');
+        setInfo(result);
+        setLoad(true);
         console.log(result);
       } catch (err) {
-        alert(err);
+        console.log('não foi');
+        setLoad(false);
       }
     }
     createTicket();
@@ -37,22 +43,68 @@ export default function SelectionTicketType({ setTicketTypeData }) {
     }
     confirmEnrollment();
   }, [enrollment]);
-  
-  return (<Container>
-    <Title>Ingresso e pagamento</Title>
-    <EnrollTrue enroll={enroll}>
-      <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
-      <TicketModel>
-        {price.map((info) => <InfosButton key={info.id} price={info.price} isRemote ={info.isRemote} info = {info}/>)}
-      </TicketModel>
-    </EnrollTrue>
-    <EnrollFalse enroll={enroll}>
-      <TextEnrollFalse>Você precisa completar sua inscrição antes
-        de prosseguir pra escolha de ingresso</TextEnrollFalse>
-    </EnrollFalse>
-    {/* {isPresential? <SelectionHotelType/> : null}
-    {isOnline? <TicketSummary/> : null} */}
-  </Container>);
+
+  function selectionType1() {
+    setSelectButton1(true);
+    setSelectButton2(false);
+    console.log(selectButton1, selectButton2);
+    if(info[0].isRemote) {
+      setIsPresential(false);
+      setIsOnline(true);
+      setTicketTypeData(info[0]);
+    } else {
+      setIsPresential(true);
+      setIsOnline(false);
+    }
+  }
+
+  function selectionType2() {
+    setSelectButton1(false);
+    setSelectButton2(true);
+    console.log(selectButton1, selectButton2);
+
+    if(info[0].isRemote) {
+      setIsPresential(false);
+      setIsOnline(true);
+      setTicketTypeData(info[0]);
+    } else {
+      setIsPresential(true);
+      setIsOnline(false);
+    }
+  }
+
+  if (info[0]) {
+    return (<Container>
+      <Title>Ingresso e pagamento</Title>
+      <EnrollTrue enroll={enroll}>
+        <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
+        <TicketModel info={info}>
+          <ButtonChoice1 onClick={selectionType1} selectButton1={selectButton1}><TicketType>{(info[0].isRemote ? 'Online' : 'Presencial')}</TicketType><Price>R$ { info[0].price }</Price></ButtonChoice1>
+          <ButtonChoice2 onClick={selectionType2} selectButton2={selectButton2}><TicketType>{(info[1].isRemote ? 'Online' : 'Presencial')}</TicketType><Price>R$ { info[1].price }</Price></ButtonChoice2>
+        </TicketModel>
+      </EnrollTrue>
+      <EnrollFalse enroll={enroll}>
+        <TextEnrollFalse>Você precisa completar sua inscrição antes
+          de prosseguir pra escolha de ingresso</TextEnrollFalse>
+      </EnrollFalse>
+      {isPresential? <SelectionHotelType info={info} setTicketStatus={setTicketStatus} setTicketTypeData={setTicketTypeData} ticketTypeData={ticketTypeData}/> : null}
+      {isOnline? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData}/> : null}
+    </Container>);
+  } else {
+    return (<Container>
+      <Title>Ingresso e pagamento</Title>
+      <EnrollTrue enroll={enroll}>
+        <TitleTicketModel>Primeiro, escolha sua modalidade de ingresso</TitleTicketModel>
+        <TicketModel info={info}>
+          Loading...
+        </TicketModel>
+      </EnrollTrue>
+      <EnrollFalse enroll={enroll}>
+        <TextEnrollFalse>Você precisa completar sua inscrição antes
+          de prosseguir pra escolha de ingresso</TextEnrollFalse>
+      </EnrollFalse>
+    </Container>);
+  }
 }
 
 const Container = styled.div`
@@ -109,7 +161,49 @@ margin-bottom: 17px;
 
 const TicketModel = styled.div`
   width:310px;
-  display: flex;
+  display: ${(prop) => (prop.info !== [] ? 'flex' : 'none')};
   flex-wrap: wrap;
   justify-content: space-between;
   `;
+
+const ButtonChoice1 = styled.div`
+  height: 145px;
+  width: 145px;
+  border: 1px solid #CECECE;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(prop) => (!prop.selectButton1 ? '#FFFFFF' : '#FFEED2')}; 
+`;
+
+const ButtonChoice2 = styled.div`
+  height: 145px;
+  width: 145px;
+  border: 1px solid #CECECE;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(prop) => (!prop.selectButton2 ? '#FFFFFF' : '#FFEED2')}; 
+`;
+
+const Price = styled.div`
+height: 16px;
+width: 46px;
+border-bottom: 3px;
+font-family: 'Roboto', sans-serif;
+font-size: 14px;
+font-weight: 100;
+line-height: 16px;
+letter-spacing: 0em;
+text-align: center;
+color: #898989;
+`;
+
+const TicketType = styled.div`
+
+`;
+

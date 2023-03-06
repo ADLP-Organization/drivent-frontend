@@ -19,12 +19,16 @@ export default function Payment() {
       {ticketStatus === null &&
         <SelectionTicketType
           setTicketTypeData={setTicketTypeData}
+          setTicketStatus={setTicketStatus}
+          ticketTypeData={ticketTypeData}
         />
       }
       {ticketStatus === 'selected' &&
        <>
          <SelectionTicketType
            setTicketTypeData={setTicketTypeData}
+           setTicketStatus={setTicketStatus}
+           ticketTypeData={ticketTypeData}
          />
          <TicketSummary
            setTicketStatus={setTicketStatus}
