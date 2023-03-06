@@ -25,7 +25,7 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
     setSelectButton1(false);
     setSelectButton2(true);
 
-    if(info[1].includeHotel) {
+    if(info[2].includeHotel) {
       setHotelOptonSelected(true);
       setTicketTypeData(info[2]);
     } else {
