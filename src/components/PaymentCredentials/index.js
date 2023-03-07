@@ -114,26 +114,6 @@ export class PaymentForm extends React.Component {
   }
 }
 
-/*function submit(userToken, data) {
-  console.log(data);
-  const body = {
-    ticketId: 23,
-    cardData: {
-      issuer: data.issuer,
-      number: data.number,
-      name: data.name,
-      cvv: data.cvc
-    }
-  };
-
-  const response = await api.post('/payment/process', body, {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
-  console.log(response);
-} */
-
 export default function PaymentCredentials({ ticketTypeData }) {
   const token = useToken();
   const body = {
