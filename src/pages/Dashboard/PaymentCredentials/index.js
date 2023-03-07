@@ -5,7 +5,7 @@ import styled from 'styled-components';
 //import PaymentForm from '../../../components/CreditCard/index';
 import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
-import { ticketType } from '../../../services/ticketApi';
+import { postTicket, ticketType } from '../../../services/ticketApi';
 import useToken from '../../../hooks/useToken';
 
 let submitData = {
@@ -15,7 +15,6 @@ let submitData = {
   number: '',
   issuer: '',
 };
-
 export class PaymentForm extends React.Component {
   state = {
     cvc: '',
@@ -28,33 +27,33 @@ export class PaymentForm extends React.Component {
 
   handleCallback = ({ issuer }) => {
     this.setState({ issuer });
-    if(typeof issuer === 'string' && issuer !== 'unknown');
+    if (typeof issuer === 'string' && issuer !== 'unknown');
     submitData.issuer = issuer;
   };
 
   handleInputFocus = (e) => {
     this.setState({ focus: e.target.name });
   };
-  
+
   handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if(name === 'number') {
+    if (name === 'number') {
       submitData.number = value;
-    }else if(name === 'name') {
+    } else if (name === 'name') {
       submitData.name = value;
-    }else if(name === 'cvc') {
+    } else if (name === 'cvc') {
       submitData.cvc = value;
-    }else if(name === 'expiry') {
+    } else if (name === 'expiry') {
       submitData.expiry = value;
     }
     this.setState({ [name]: value });
   };
- 
+
   render() {
     return (
       <PaymentFormContainer id="PaymentForm">
-        
+
         <Cards
           cvc={this.state.cvc}
           expiry={this.state.expiry}
@@ -63,8 +62,8 @@ export class PaymentForm extends React.Component {
           number={this.state.number}
           callback={this.handleCallback}
         />
-        
-        <form onSubmit= {(e) => submit(e)}>
+
+        <form>
           <InputsContainer>
             <div>
               <input
@@ -89,7 +88,7 @@ export class PaymentForm extends React.Component {
                 pattern='[a-z A-Z-]+'
               />
             </div>
-            
+
             <div>
               <input
                 type="tel"
@@ -108,7 +107,7 @@ export class PaymentForm extends React.Component {
                 onFocus={this.handleInputFocus}
                 required
                 maxLength='3'
-              />             
+              />
             </div>
           </InputsContainer>
         </form>
@@ -117,37 +116,54 @@ export class PaymentForm extends React.Component {
   }
 }
 
-async function submit(userToken, data) {
+/*function submit(userToken, data) {
+  console.log(data);
   const body = {
-    ticketId: 32,
+    ticketId: 23,
     cardData: {
-      cardIssuer: data.issuer,
-      cardLastDigits: data.number.substring((data.number.length-4), (data.number.length))
+      issuer: data.issuer,
+      number: data.number,
+      name: data.name,
+      cvv: data.cvc
     }
   };
-
-  const response = await api.post('/paymentProcess', body, {
+  const response = await api.post('/payment/process', body, {
     headers: {
       Authorization: `Bearer ${userToken}`,
     },
   });
   console.log(response);
-}
+} */
 
-export default function PaymentCredentials() {
+export default function PaymentCredentials({ ticketTypeData }) {
   const token = useToken();
+  const body = {
+    ticketId: 23,
+    cardData: {
+      issuer: submitData.issuer,
+      number: submitData.number,
+      name: submitData.name,
+      expirationDate: Date,
+      cvv: submitData.cvc
+    }
+  };
+  async function submit() {
+    try {
+      await postTicket(body, token);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
   return (
     <>
-      <StyledTypography variant="h4">Ingresso e pagamento </StyledTypography>
-      <Summary>Resumo</Summary>
       <Payment>
-        <Subtitle>Pagamento</Subtitle>
         <PaymentForm />
         <SubmitButton
-          onClick = {() => submit(token, submitData)}
+          onClick={submit}
         >FINALIZAR PAGAMENTO</SubmitButton>
       </Payment>
-      
+
     </>
   );
 }
@@ -156,21 +172,13 @@ const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
 `;
 
-const Summary = styled.div`
-  height: 200px;
-  width: 500px;
-  background: red;
-`;
-
 const Payment = styled.div`
-background-color: yellow;
   display: column;
   align-items: center;
   justify-content: center;
 `;
 
 const PaymentFormContainer = styled.div`
-  background-color: blue;
   display: flex;
   justify-content: space-between;
   margin-bottom: 70px;
@@ -183,22 +191,17 @@ const SubmitButton = styled.button`
   border: none;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-
   color: #000000;
-
   &:hover {
     cursor: pointer;
   }
-
 `;
 
 const InputsContainer = styled.div`
-  background-color: pink;
   display: column;
   align-items: center;
   justify-content: center;
