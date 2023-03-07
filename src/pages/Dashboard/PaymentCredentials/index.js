@@ -158,6 +158,7 @@ export default function PaymentCredentials({ ticketTypeData }) {
 
   return (
     <>
+      <Subtitle>Pagamento</Subtitle>
       <Payment>
         <PaymentForm />
         <SubmitButton

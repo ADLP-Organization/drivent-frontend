@@ -4,7 +4,6 @@ import SelectionTicketType from '../../../components/Ticket and Payment/Selectio
 import TicketSummary from '../../../components/Ticket and Payment/TicketSummary';
 import PaymentCredentials from '../PaymentCredentials';
 import TicketSelected from '../../../components/Ticket and Payment/TicketSelected';
-import styled from 'styled-components';
 
 export default function Payment() {
   const [ticketTypeData, setTicketTypeData] = useState(null);
@@ -35,24 +34,15 @@ export default function Payment() {
       {ticketStatus === 'reserved' &&
         <>
           <TicketSelected ticketTypeData={ticketTypeData} />
-          <TitlePayment>Pagamento</TitlePayment>
           <PaymentCredentials ticketTypeData = {ticketTypeData}/>
         </>
       }      
       {ticketStatus === 'paid' &&
         <>
-          <TicketSelected
-            ticketTypeData={ticketTypeData}
-          />
+          <TicketSelected ticketTypeData={ticketTypeData} />
           <PaymentConfirmation />
         </>  
       }
     </>
   );
-}
-
-const TitlePayment = styled.div`
-margin-bottom: 21px;
-color: #8E8E8E;
-;
-`;
+};

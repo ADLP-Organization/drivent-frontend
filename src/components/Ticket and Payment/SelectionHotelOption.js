@@ -11,7 +11,6 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
   function selectionType1() {
     setSelectButton1(true);
     setSelectButton2(false);
-    console.log(selectButton1, selectButton2);
     if(info[1].includeHotel) {
       setHotelOptonSelected(true);
       setTicketTypeData(info[2]);
@@ -47,7 +46,6 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
 
 const TitleTicketModel = styled.div`
 height: 23px;
-width: 500px;
 font-family: 'Roboto', sans-serif;
 font-size: 20px;
 font-weight: 400;

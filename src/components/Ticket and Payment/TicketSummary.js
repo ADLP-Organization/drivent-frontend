@@ -8,7 +8,6 @@ export default function TicketSummary({ setTicketStatus, ticketTypeData }) {
   const body = {
     ticketTypeId: ticketTypeData.id
   };
-
   const price = ticketTypeData.price;
 
   async function createTicket() {
@@ -63,7 +62,6 @@ const Button = styled.button`
 const Summary = styled.div`
   margin-top:20px;
   margin-bottom: 17px;
-
 
   h2 {
     font-size: 20px;
