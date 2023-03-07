@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PaymentConfirmation from '../../../components/Ticket and Payment/PaymentConfirmation';
 import SelectionTicketType from '../../../components/Ticket and Payment/SelectionType';
 import TicketSummary from '../../../components/Ticket and Payment/TicketSummary';
-import PaymentCredentials from '../PaymentCredentials';
+import PaymentCredentials from '../../../components/PaymentCredentials';
 import TicketSelected from '../../../components/Ticket and Payment/TicketSelected';
 import styled from 'styled-components';
 

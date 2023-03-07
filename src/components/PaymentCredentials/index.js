@@ -1,12 +1,10 @@
 import React from 'react';
-import api from './api';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
-//import PaymentForm from '../../../components/CreditCard/index';
 import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
-import { postTicket, ticketType } from '../../../services/ticketApi';
-import useToken from '../../../hooks/useToken';
+import { postTicket } from '../../services/ticketApi';
+import useToken from '../../hooks/useToken';
 
 let submitData = {
   cvc: '',
