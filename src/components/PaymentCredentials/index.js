@@ -5,6 +5,7 @@ import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
 import { postTicket } from '../../services/ticketApi';
 import useToken from '../../hooks/useToken';
+import { processPayment } from '../../services/paymentApi';
 
 let submitData = {
   cvc: '',
@@ -116,8 +117,18 @@ export class PaymentForm extends React.Component {
 
 export default function PaymentCredentials({ ticketTypeData }) {
   const token = useToken();
+  // const body = {
+  //   ticketId: 41,
+  //   cardData: {
+  //     issuer: submitData.issuer,
+  //     number: submitData.number,
+  //     name: submitData.name,
+  //     expirationDate: Date,
+  //     cvv: submitData.cvc
+  //   }
+  // };
   const body = {
-    ticketId: 23,
+    ticketId: 41,
     cardData: {
       issuer: submitData.issuer,
       number: submitData.number,
@@ -128,7 +139,7 @@ export default function PaymentCredentials({ ticketTypeData }) {
   };
   async function submit() {
     try {
-      await postTicket(body, token);
+      await processPayment(token, body);
     } catch (err) {
       console.log(err.message);
     }
