@@ -182,18 +182,14 @@ const SubmitButton = styled.button`
   border: none;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-
   color: #000000;
-
   &:hover {
     cursor: pointer;
   }
-
 `;
 
 const InputsContainer = styled.div`
