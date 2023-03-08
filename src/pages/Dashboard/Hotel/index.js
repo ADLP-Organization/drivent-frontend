@@ -3,10 +3,25 @@ import { useState, useEffect } from 'react';
 import BoxHotels from '../../../components/Hotels/BoxHotels';
 import BoxRooms from '../../../components/Hotels/BoxRooms';
 import Booking from '../../../components/Hotels/Booking';
+import { getTicket } from '../../../services/ticketApi';
+import useToken from '../../../hooks/useToken';
 
 export default function Hotel() {
   const [bookingData, setBookingData] = useState(null);
   const [bookingStatus, setBookingStatus] = useState('selected'); //options: available, selected, reserved, unpaid, unavailable
+  const token =  useToken();
+
+  useEffect( async () => {
+
+    const ticket = await getTicket( token );
+    console.log(ticket)
+    if ( (ticket.ticketTypeId === 2 )|| (ticket.ticketTypeId === 1) ) {
+      setBookingStatus('unavailable');
+    } else if (ticket.ticketTypeId === 3 ) {
+      setBookingStatus('available');
+    }
+
+  }, []);
 
   if (bookingStatus === null) {
     return (
@@ -36,8 +51,8 @@ export default function Hotel() {
        <>
          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
          <BoxHotels
-           bookingStatus={bookingStatus}
            setBookingStatus={setBookingStatus}
+           setBookingData={setBookingData}
          />
        </>
       }
@@ -47,7 +62,6 @@ export default function Hotel() {
          <BoxHotels/>
          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
          <BoxRooms
-           bookingStatus={bookingStatus}
            setBookingStatus={setBookingStatus}
          />
        </>        
