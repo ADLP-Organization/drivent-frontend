@@ -6,7 +6,7 @@ import Booking from '../../../components/Hotels/Booking';
 
 export default function Hotel() {
   const [bookingData, setBookingData] = useState(null);
-  const [bookingStatus, setBookingStatus] = useState('unpaid'); //options: available, selected, reserved, unpaid, unavailable
+  const [bookingStatus, setBookingStatus] = useState('selected'); //options: available, selected, reserved, unpaid, unavailable
 
   if (bookingStatus === null) {
     return (
