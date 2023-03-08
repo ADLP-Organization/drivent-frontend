@@ -118,7 +118,6 @@ color:#8E8E8E;
 const TextEnrollFalse = styled.div`
 margin-top: 206px;
 height: 46px;
-width: 388px;
 font-family: 'Roboto', sans-serif;
 font-size: 20px;
 font-weight: 400;
@@ -129,7 +128,6 @@ text-align: center;
 
 const Title = styled.div`
 height: 40px;
-width: 340px;
 font-family: 'Roboto', sans-serif;
 font-size: 34px;
 font-weight: 400;
@@ -141,7 +139,6 @@ margin-bottom: 25px;
 
 const TitleTicketModel = styled.div`
 height: 23px;
-width: 411px;
 font-family: 'Roboto', sans-serif;
 font-size: 20px;
 font-weight: 400;

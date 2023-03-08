@@ -8,19 +8,19 @@ export default function TicketSelected({ ticketTypeData }) {
       {ticketTypeData.isRemote === true &&
         <CardTicket>
           <p>Online</p>
-          <p>R$ {ticketTypeData.price}</p>
+          <p>R${ticketTypeData.price}</p>
         </CardTicket>
       }
       {(ticketTypeData.isRemote === false && ticketTypeData.includesHotel === false) &&
         <CardTicket>
           <p>Presencial + Sem Hotel</p>
-          <p>R$ {ticketTypeData.price}</p>
+          <p>R${ticketTypeData.price}</p>
         </CardTicket>
       }
       {(ticketTypeData.isRemote === false && ticketTypeData.includesHotel === true) &&
         <CardTicket>
           <p>Presencial + Com Hotel</p>
-          <p>R$ {ticketTypeData.price}</p>
+          <p>R${ticketTypeData.price}</p>
         </CardTicket>
       }
     </>
@@ -61,9 +61,11 @@ justify-content: center;
 align-items: center;
 background-color: #FFEED2; 
 margin-bottom: 40px;
+
   p:first-child {
     font-size: 16px;
     color: #898989;
+    margin-bottom: 5px;
   }
 
   p:last-child {
