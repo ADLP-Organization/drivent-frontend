@@ -1,11 +1,10 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
-import { postTicket } from '../../services/ticketApi';
 import useToken from '../../hooks/useToken';
 import { processPayment } from '../../services/paymentApi';
+import { toast } from 'react-toastify';
 
 let submitData = {
   cvc: '',
@@ -115,10 +114,10 @@ export class PaymentForm extends React.Component {
   }
 }
 
-export default function PaymentCredentials({ ticketTypeData }) {
+export default function PaymentCredentials({ setTicketStatus, ticketTypeData }) {
   const token = useToken();
 
-  async function submit() {
+  async function registerPayment() {
     const body = {
       ticketId: 41,
       cardData: {
@@ -129,11 +128,23 @@ export default function PaymentCredentials({ ticketTypeData }) {
         cvv: submitData.cvc
       }
     };
-    
+
+    if(
+      body.cardData.name === '' || 
+      body.cardData.number === '' || 
+      body.cardData.cvv === '' || 
+      body.cardData.issuer === '' ||
+      body.cardData.expirationDate === '') {
+      toast('Preencha todos os campos');
+      return;
+    }
     try {
-      console.log(submitData, body);
-      await processPayment(token, body);
-    } catch (err) {
+      const res = await processPayment(token, body); 
+      console.log(res);
+      setTicketStatus('paid');      
+      toast('Pagamento realizado com sucesso!');      
+    } catch(err) {
+      toast('Ops! Algo deu errado.');
       console.log(err.message);
     }
   }
@@ -144,17 +155,13 @@ export default function PaymentCredentials({ ticketTypeData }) {
       <Payment>
         <PaymentForm />
         <SubmitButton
-          onClick={submit}
+          onClick={registerPayment}
         >FINALIZAR PAGAMENTO</SubmitButton>
       </Payment>
 
     </>
   );
 }
-
-const StyledTypography = styled(Typography)`
-  margin-bottom: 20px!important;
-`;
 
 const Payment = styled.div`
   display: column;
