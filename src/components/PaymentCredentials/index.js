@@ -1,12 +1,11 @@
 import React from 'react';
-import api from './api';
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
-//import PaymentForm from '../../../components/CreditCard/index';
 import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
-import { postTicket, ticketType } from '../../../services/ticketApi';
-import useToken from '../../../hooks/useToken';
+import { postTicket } from '../../services/ticketApi';
+import useToken from '../../hooks/useToken';
+import { processPayment } from '../../services/paymentApi';
 
 let submitData = {
   cvc: '',
@@ -116,30 +115,20 @@ export class PaymentForm extends React.Component {
   }
 }
 
-/*function submit(userToken, data) {
-  console.log(data);
-  const body = {
-    ticketId: 23,
-    cardData: {
-      issuer: data.issuer,
-      number: data.number,
-      name: data.name,
-      cvv: data.cvc
-    }
-  };
-
-  const response = await api.post('/payment/process', body, {
-    headers: {
-      Authorization: `Bearer ${userToken}`,
-    },
-  });
-  console.log(response);
-} */
-
 export default function PaymentCredentials({ ticketTypeData }) {
   const token = useToken();
+  // const body = {
+  //   ticketId: 41,
+  //   cardData: {
+  //     issuer: submitData.issuer,
+  //     number: submitData.number,
+  //     name: submitData.name,
+  //     expirationDate: Date,
+  //     cvv: submitData.cvc
+  //   }
+  // };
   const body = {
-    ticketId: 23,
+    ticketId: 41,
     cardData: {
       issuer: submitData.issuer,
       number: submitData.number,
@@ -150,7 +139,7 @@ export default function PaymentCredentials({ ticketTypeData }) {
   };
   async function submit() {
     try {
-      await postTicket(body, token);
+      await processPayment(token, body);
     } catch (err) {
       console.log(err.message);
     }
@@ -193,18 +182,14 @@ const SubmitButton = styled.button`
   border: none;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-
   color: #000000;
-
   &:hover {
     cursor: pointer;
   }
-
 `;
 
 const InputsContainer = styled.div`
