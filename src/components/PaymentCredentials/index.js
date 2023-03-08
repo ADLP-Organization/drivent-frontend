@@ -117,28 +117,21 @@ export class PaymentForm extends React.Component {
 
 export default function PaymentCredentials({ ticketTypeData }) {
   const token = useToken();
-  // const body = {
-  //   ticketId: 41,
-  //   cardData: {
-  //     issuer: submitData.issuer,
-  //     number: submitData.number,
-  //     name: submitData.name,
-  //     expirationDate: Date,
-  //     cvv: submitData.cvc
-  //   }
-  // };
-  const body = {
-    ticketId: 41,
-    cardData: {
-      issuer: submitData.issuer,
-      number: submitData.number,
-      name: submitData.name,
-      expirationDate: Date,
-      cvv: submitData.cvc
-    }
-  };
+
   async function submit() {
+    const body = {
+      ticketId: 41,
+      cardData: {
+        issuer: submitData.issuer,
+        number: submitData.number,
+        name: submitData.name,
+        expirationDate: Date,
+        cvv: submitData.cvc
+      }
+    };
+    
     try {
+      console.log(submitData, body);
       await processPayment(token, body);
     } catch (err) {
       console.log(err.message);
