@@ -6,7 +6,7 @@ export default function BoxRooms() {
   const [clickButton, setClickButton] = useState(false);
   return (
     <RoomContainer>
-      <Room clickButton = {clickButton}><a>101</a><BsPersonFill size={30} color={'#FF4791'}/></Room>
+      <Room clickButton = {clickButton}><a>101</a><BsPersonFill size={30}/></Room>
       <Room><a>102</a><BsPerson size={30}/></Room>
       <Room><a>103</a><BsPerson size={30}/></Room>
       <Room><a>104</a><BsPerson size={30}/></Room>
@@ -44,7 +44,8 @@ const Room = styled.div`
   justify-content: space-between;
   padding-right: 12.28px;
   margin-bottom: 8px;
-  background-color: ${(prop) => (!prop.clickButton ? '#FFEED2' : '#FFFFFF')};
+  background-color: ${(prop) => (prop.clickButton ? '#FFEED2' : '#FFFFFF')};
+  color:${(prop) => (!prop.clickButton ? '' : '#FF4791')};;
   a{
     height: 23px;
     width: 35px;
