@@ -34,7 +34,10 @@ export default function Payment() {
       {ticketStatus === 'reserved' &&
         <>
           <TicketSelected ticketTypeData={ticketTypeData} />
-          <PaymentCredentials ticketTypeData = {ticketTypeData}/>
+          <PaymentCredentials 
+            setTicketStatus={setTicketStatus}
+            ticketTypeData={ticketTypeData}
+          />
         </>
       }      
       {ticketStatus === 'paid' &&

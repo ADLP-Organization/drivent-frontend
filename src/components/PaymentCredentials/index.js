@@ -1,11 +1,10 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
-import { postTicket } from '../../services/ticketApi';
 import useToken from '../../hooks/useToken';
 import { processPayment } from '../../services/paymentApi';
+import { toast } from 'react-toastify';
 
 let submitData = {
   cvc: '',
@@ -65,7 +64,7 @@ export class PaymentForm extends React.Component {
         <form>
           <InputsContainer>
             <div>
-              <input
+              <GenericInput
                 type="tel"
                 name="number"
                 placeholder="Card Number"
@@ -75,9 +74,11 @@ export class PaymentForm extends React.Component {
                 pattern='[\d| ]{16,22}'
                 maxLength='19'
               />
-            </div>
+            </div> 
+            <Tip>E.g.: 49..., 51..., 36..., 37...</Tip>
+            <br />
             <div>
-              <input
+              <GenericInput
                 type="tel"
                 name="name"
                 placeholder="Name"
@@ -89,7 +90,7 @@ export class PaymentForm extends React.Component {
             </div>
 
             <div>
-              <input
+              <ExpiryInput
                 type="tel"
                 name="expiry"
                 placeholder="Valid Thru"
@@ -98,7 +99,7 @@ export class PaymentForm extends React.Component {
                 required
                 maxLength='4'
               />
-              <input
+              <CvcInput
                 type="tel"
                 name="cvc"
                 placeholder="CVC"
@@ -115,32 +116,37 @@ export class PaymentForm extends React.Component {
   }
 }
 
-export default function PaymentCredentials({ ticketTypeData }) {
+export default function PaymentCredentials({ setTicketStatus, ticketTypeData }) {
   const token = useToken();
-  // const body = {
-  //   ticketId: 41,
-  //   cardData: {
-  //     issuer: submitData.issuer,
-  //     number: submitData.number,
-  //     name: submitData.name,
-  //     expirationDate: Date,
-  //     cvv: submitData.cvc
-  //   }
-  // };
-  const body = {
-    ticketId: 41,
-    cardData: {
-      issuer: submitData.issuer,
-      number: submitData.number,
-      name: submitData.name,
-      expirationDate: Date,
-      cvv: submitData.cvc
+
+  async function registerPayment() {
+    const body = {
+      ticketId: 41,
+      cardData: {
+        issuer: submitData.issuer,
+        number: submitData.number,
+        name: submitData.name,
+        expirationDate: Date,
+        cvv: submitData.cvc
+      }
+    };
+
+    if(
+      body.cardData.name === '' || 
+      body.cardData.number === '' || 
+      body.cardData.cvv === '' || 
+      body.cardData.issuer === '' ||
+      body.cardData.expirationDate === '') {
+      toast('Preencha todos os campos');
+      return;
     }
-  };
-  async function submit() {
     try {
-      await processPayment(token, body);
-    } catch (err) {
+      const res = await processPayment(token, body); 
+      console.log(res);
+      setTicketStatus('paid');      
+      toast('Pagamento realizado com sucesso!');      
+    } catch(err) {
+      toast('Ops! Algo deu errado.');
       console.log(err.message);
     }
   }
@@ -151,17 +157,13 @@ export default function PaymentCredentials({ ticketTypeData }) {
       <Payment>
         <PaymentForm />
         <SubmitButton
-          onClick={submit}
+          onClick={registerPayment}
         >FINALIZAR PAGAMENTO</SubmitButton>
       </Payment>
 
     </>
   );
 }
-
-const StyledTypography = styled(Typography)`
-  margin-bottom: 20px!important;
-`;
 
 const Payment = styled.div`
   display: column;
@@ -196,7 +198,7 @@ const InputsContainer = styled.div`
   display: column;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  max-width: 400px;
 `;
 
 const Subtitle = styled.div`
@@ -210,4 +212,32 @@ const Subtitle = styled.div`
   text-align: left;
   color: #8E8E8E;
   margin-bottom: 17px;
+`;
+
+const GenericInput = styled.input`
+  width: 400px;
+  height: 30px;
+  border-radius: 5px;
+  margin-top: 10px;
+`;
+
+const ExpiryInput = styled.input`
+  height: 30px;
+  border-radius: 5px;
+  width: 170px;
+  margin-right: 10px;
+  margin-top: 10px;
+`;
+const CvcInput = styled.input`
+  height: 30px;
+  border-radius: 5px;
+  width: 80px;
+  border-color: grey;
+  margin-bottom: 10px;
+  margin-top: 10px;
+`;
+const Tip = styled.small`
+  font-size: 15px;
+  color: grey;
+  margin-bottom: 15px;
 `;

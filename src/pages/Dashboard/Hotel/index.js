@@ -11,16 +11,14 @@ export default function Hotel() {
   const [bookingStatus, setBookingStatus] = useState('selected'); //options: available, selected, reserved, unpaid, unavailable
   const token =  useToken();
 
-  useEffect( async () => {
-
+  useEffect( async() => {
     const ticket = await getTicket( token );
-    console.log(ticket)
+    console.log(ticket);
     if ( (ticket.ticketTypeId === 2 )|| (ticket.ticketTypeId === 1) ) {
       setBookingStatus('unavailable');
     } else if (ticket.ticketTypeId === 3 ) {
       setBookingStatus('available');
-    }
-
+    };
   }, []);
 
   if (bookingStatus === null) {
