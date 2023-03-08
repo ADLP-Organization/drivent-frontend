@@ -51,8 +51,8 @@ export default function Hotel() {
        <>
          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
          <BoxHotels
-           bookingStatus={bookingStatus}
            setBookingStatus={setBookingStatus}
+           setBookingData={setBookingData}
          />
        </>
       }
@@ -62,7 +62,6 @@ export default function Hotel() {
          <BoxHotels/>
          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
          <BoxRooms
-           bookingStatus={bookingStatus}
            setBookingStatus={setBookingStatus}
          />
        </>        
