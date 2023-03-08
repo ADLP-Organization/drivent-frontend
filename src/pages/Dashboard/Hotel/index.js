@@ -6,7 +6,7 @@ import Booking from '../../../components/Hotels/Booking';
 
 export default function Hotel() {
   const [bookingData, setBookingData] = useState(null);
-  const [bookingStatus, setBookingStatus] = useState('selected'); //options: available, selected, reserved, unpaid, unavailable
+  const [bookingStatus, setBookingStatus] = useState(null); //options: available, selected, reserved, unpaid, unavailable
 
   if (bookingStatus === null) {
     return (
@@ -36,8 +36,8 @@ export default function Hotel() {
        <>
          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
          <BoxHotels
-           bookingStatus={bookingStatus}
            setBookingStatus={setBookingStatus}
+           setBookingData={setBookingData}
          />
        </>
       }
@@ -47,7 +47,6 @@ export default function Hotel() {
          <BoxHotels/>
          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
          <BoxRooms
-           bookingStatus={bookingStatus}
            setBookingStatus={setBookingStatus}
          />
        </>        
