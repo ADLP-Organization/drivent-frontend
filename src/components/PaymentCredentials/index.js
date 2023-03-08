@@ -64,7 +64,7 @@ export class PaymentForm extends React.Component {
         <form>
           <InputsContainer>
             <div>
-              <input
+              <GenericInput
                 type="tel"
                 name="number"
                 placeholder="Card Number"
@@ -74,9 +74,11 @@ export class PaymentForm extends React.Component {
                 pattern='[\d| ]{16,22}'
                 maxLength='19'
               />
-            </div>
+            </div> 
+            <Tip>E.g.: 49..., 51..., 36..., 37...</Tip>
+            <br />
             <div>
-              <input
+              <GenericInput
                 type="tel"
                 name="name"
                 placeholder="Name"
@@ -88,7 +90,7 @@ export class PaymentForm extends React.Component {
             </div>
 
             <div>
-              <input
+              <ExpiryInput
                 type="tel"
                 name="expiry"
                 placeholder="Valid Thru"
@@ -97,7 +99,7 @@ export class PaymentForm extends React.Component {
                 required
                 maxLength='4'
               />
-              <input
+              <CvcInput
                 type="tel"
                 name="cvc"
                 placeholder="CVC"
@@ -196,7 +198,7 @@ const InputsContainer = styled.div`
   display: column;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  max-width: 400px;
 `;
 
 const Subtitle = styled.div`
@@ -210,4 +212,32 @@ const Subtitle = styled.div`
   text-align: left;
   color: #8E8E8E;
   margin-bottom: 17px;
+`;
+
+const GenericInput = styled.input`
+  width: 400px;
+  height: 30px;
+  border-radius: 5px;
+  margin-top: 10px;
+`;
+
+const ExpiryInput = styled.input`
+  height: 30px;
+  border-radius: 5px;
+  width: 170px;
+  margin-right: 10px;
+  margin-top: 10px;
+`;
+const CvcInput = styled.input`
+  height: 30px;
+  border-radius: 5px;
+  width: 80px;
+  border-color: grey;
+  margin-bottom: 10px;
+  margin-top: 10px;
+`;
+const Tip = styled.small`
+  font-size: 15px;
+  color: grey;
+  margin-bottom: 15px;
 `;
