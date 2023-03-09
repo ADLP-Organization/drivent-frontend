@@ -116,12 +116,12 @@ export class PaymentForm extends React.Component {
   }
 }
 
-export default function PaymentCredentials({ setTicketStatus, ticketTypeData }) {
+export default function PaymentCredentials({ setTicketStatus, ticketId }) {
   const token = useToken();
 
   async function registerPayment() {
     const body = {
-      ticketId: 41,
+      ticketId: ticketId,
       cardData: {
         issuer: submitData.issuer,
         number: submitData.number,
@@ -141,8 +141,7 @@ export default function PaymentCredentials({ setTicketStatus, ticketTypeData }) 
       return;
     }
     try {
-      const res = await processPayment(token, body); 
-      console.log(res);
+      await processPayment(token, body); 
       setTicketStatus('paid');      
       toast('Pagamento realizado com sucesso!');      
     } catch(err) {
