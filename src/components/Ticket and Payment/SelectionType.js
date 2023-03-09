@@ -6,7 +6,7 @@ import { ticketType } from '../../services/ticketApi';
 import SelectionHotelType from './SelectionHotelOption';
 import TicketSummary from './TicketSummary';
 
-export default function SelectionTicketType({ setTicketStatus, ticketTypeData, setTicketTypeData }) {
+export default function SelectionTicketType({ setTicketStatus, ticketTypeData, setTicketTypeData, setTicketId, ticketId }) {
   const token = useToken();
   const [enroll, setEnroll] = useState(false);
   const [info, setInfo] = useState([]);
@@ -80,8 +80,8 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
         <TextEnrollFalse>Você precisa completar sua inscrição antes
           de prosseguir pra escolha de ingresso</TextEnrollFalse>
       </EnrollFalse>
-      {isPresential? <SelectionHotelType info={info} setTicketStatus={setTicketStatus} setTicketTypeData={setTicketTypeData} ticketTypeData={ticketTypeData}/> : null}
-      {isOnline? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData}/> : null}
+      {isPresential? <SelectionHotelType info={info} setTicketStatus={setTicketStatus} setTicketTypeData={setTicketTypeData} ticketTypeData={ticketTypeData} setTicketId={setTicketId} ticketId={ticketId}/> : null}
+      {isOnline? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData} setTicketId={setTicketId} ticketId={ticketId} /> : null}
     </Container>);
   } else {
     return (<Container>
