@@ -3,17 +3,18 @@ import { toast } from 'react-toastify';
 import { postTicketAPI } from '../../services/ticketApi';
 import useToken from '../../hooks/useToken';
 
-export default function TicketSummary({ setTicketStatus, ticketTypeData }) {
+export default function TicketSummary({ setTicketStatus, ticketTypeData, setTicketId, ticketId }) {
   const token = useToken();
   const body = {
     ticketTypeId: ticketTypeData.id
   };
   const price = ticketTypeData.price;
-
+  
   async function createTicket() {
     try {
-      await postTicketAPI(body, token); 
-      setTicketStatus('reserved');      
+      const res = await postTicketAPI(body, token); 
+      setTicketId(res.id);
+      setTicketStatus('reserved');   
       toast('Informações salvas com sucesso!');      
     } catch(err) {
       toast('Ops! Algo deu errado.');

@@ -9,18 +9,16 @@ import useToken from '../../../hooks/useToken';
 export default function Hotel() {
   const [bookingData, setBookingData] = useState(null);
   const [bookingStatus, setBookingStatus] = useState('selected'); //options: available, selected, reserved, unpaid, unavailable
-  const token =  useToken();
+  const token = useToken();
 
-  useEffect( async () => {
-
-    const ticket = await getTicket( token );
-    console.log(ticket)
-    if ( (ticket.ticketTypeId === 2 )|| (ticket.ticketTypeId === 1) ) {
+  useEffect(async() => {
+    const ticket = await getTicket(token);
+    console.log(ticket);
+    if ((ticket.ticketTypeId === 2) || (ticket.ticketTypeId === 1)) {
       setBookingStatus('unavailable');
-    } else if (ticket.ticketTypeId === 3 ) {
+    } else if (ticket.ticketTypeId === 3) {
       setBookingStatus('available');
     }
-
   }, []);
 
   if (bookingStatus === null) {
@@ -38,33 +36,33 @@ export default function Hotel() {
     <>
       <Title>Escolha de hotel e quarto</Title>
       {bookingStatus === 'unpaid' &&
-       <>
-         <Subtitle>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.</Subtitle>
-       </>
+        <>
+          <Subtitle>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.</Subtitle>
+        </>
       }
       {bookingStatus === 'unavailable' &&
-       <>
-         <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
-       </>
+        <>
+          <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
+        </>
       }
       {bookingStatus === 'available' &&
-       <>
-         <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
-         <BoxHotels
-           setBookingStatus={setBookingStatus}
-           setBookingData={setBookingData}
-         />
-       </>
+        <>
+          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
+          <BoxHotels
+            setBookingStatus={setBookingStatus}
+            setBookingData={setBookingData}
+          />
+        </>
       }
       {bookingStatus === 'selected' &&
-       <>
-         <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
-         <BoxHotels/>
-         <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
-         <BoxRooms
-           setBookingStatus={setBookingStatus}
-         />
-       </>        
+        <>
+          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
+          <BoxHotels />
+          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
+          <BoxRooms
+            setBookingStatus={setBookingStatus}
+          />
+        </>
       }
       {bookingStatus === 'reserved' &&
         <>
@@ -73,7 +71,7 @@ export default function Hotel() {
             setBookingStatus={setBookingStatus}
           />
         </>
-      }      
+      }
     </>
   );
 };

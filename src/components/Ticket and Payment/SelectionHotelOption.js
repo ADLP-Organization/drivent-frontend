@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import TicketSummary from './TicketSummary';
 
-export default function SelectionHotelType({ info, setTicketStatus, setTicketTypeData, ticketTypeData }) {
+export default function SelectionHotelType({ info, setTicketStatus, setTicketTypeData, ticketTypeData, setTicketId, ticketId }) {
   const [hotelOptonSelected, setHotelOptonSelected] = useState(null);
   const [selectButton1, setSelectButton1] = useState(false);
   const [selectButton2, setSelectButton2] = useState(false);
@@ -40,7 +40,7 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
         <ButtonChoice1 onClick={selectionType1} selectButton1={selectButton1}><TicketType>{(info[1].includesHotel ? 'Com Hotel' : 'Sem hotel')}</TicketType><Price>R$ { (info[1].includesHotel ? hotelPrice : 0) }</Price></ButtonChoice1>
         <ButtonChoice2 onClick={selectionType2} selectButton2={selectButton2}><TicketType>{(info[2].includesHotel ? 'Com Hotel' : 'Sem hotel')}</TicketType><Price>R$ { (info[2].includesHotel ? hotelPrice : 0) }</Price></ButtonChoice2>
       </TicketModel>
-      { hotelOptonSelected? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData}/>: null }
+      { hotelOptonSelected? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData} setTicketId={setTicketId} ticketId={ticketId} />: null }
     </>);
 }
 
