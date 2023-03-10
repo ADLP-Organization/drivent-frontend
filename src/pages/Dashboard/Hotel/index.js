@@ -7,7 +7,6 @@ import { getTicket } from '../../../services/ticketApi';
 import useToken from '../../../hooks/useToken';
 
 export default function Hotel() {
-  const [bookingData, setBookingData] = useState(null);
   const [hotelId, setHotelId] = useState(null);
   const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
   const token =  useToken();
@@ -55,8 +54,6 @@ export default function Hotel() {
          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
          <BoxHotels
            setBookingStatus={setBookingStatus}
-           setBookingData={setBookingData}
-           hotelId={hotelId}
            setHotelId={setHotelId}
          />
        </>
@@ -64,7 +61,10 @@ export default function Hotel() {
       {bookingStatus === 'selected' &&
        <>
          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
-         <BoxHotels/>
+         <BoxHotels
+           setBookingStatus={setBookingStatus}
+           setHotelId={setHotelId}
+         />
          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
          <BoxRooms
            setBookingStatus={setBookingStatus}

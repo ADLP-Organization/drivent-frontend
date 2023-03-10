@@ -1,8 +1,17 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
-export default function CardHotel({ id, image, name, setHotelId, hotelId }) {
+export default function CardHotel({ id, image, name, setHotelId, setBookingStatus }) {
+  const [isClicked, setIsClicked] = useState(false);
+
+  function selectHotel() {
+    setBookingStatus('selected');
+    setHotelId(id);
+    setIsClicked(!isClicked);
+  };
+
   return (
-    <Hotel id={id} onClick={() => setHotelId(id)}>
+    <Hotel id={id} isClicked={isClicked} onClick={selectHotel}>
       <img src={image} alt='Hotel'/>
       <h1>{name}</h1>
       <h2>Tipos de acomodação:</h2>
@@ -17,13 +26,13 @@ const Hotel = styled.div`
 width: 196px;
 height: 264px;
 border-radius: 10px;
-background-color: #EBEBEB;
+background-color: ${(props) => (props.isClicked? '#FFEED2' : '#F1F1F1')};
 margin-right: 15px;
 margin-bottom: 15px;
 font-family: 'Roboto', sans-serif;
 font-style: normal;
 padding: 10px;
-position: absolute;
+
 &:hover {
   cursor: pointer;
   background-color: #ccc;
