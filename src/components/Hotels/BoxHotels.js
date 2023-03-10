@@ -3,32 +3,42 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import useToken from '../../hooks/useToken';
 import { getHotelsList } from '../../services/hotelApi';
-import { getTicketsByUserId } from '../../services/ticketApi';
+import CardHotel from './CardHotel';
 
-export default function BoxHotels({ setBookingStatus, setBookingData }) {
+export default function BoxHotels({ setBookingStatus, setBookingData, setHotelId, hotelId }) {
   const token = useToken();
-  const [hotels, setHotels] = useState(null);
+  const [hotels, setHotels] = useState([]);
 
-  useEffect(() => {
-    async function HotelsList() {
-      try {
-        const checkTicket = await getTicketsByUserId(token);
-        console.log(checkTicket);
-        //if - não pago
-        const result = await getHotelsList(token);
-        setHotels(result);
-        //setBookingData(hotelId)
-        console.log(result);
-        setBookingStatus('available');
-      } catch (err) {
-        toast('Ops! Algo deu errado.');
-        console.log(err.message);
-      }
-    }
-    HotelsList();
+  useEffect ( async() => {
+    try {
+      const result = await getHotelsList(token);
+      setHotels(result);
+    } catch (err) {
+      toast('Ops! Algo deu errado.');
+      console.log(err.message);
+    };
   }, []);
 
   return (
-    'BoxHotels Em breve!'
+    <AllHotels>
+      {hotels !== null && 
+      hotels.map((h) =>
+        <CardHotel 
+          key={h.id}
+          id={h.id}
+          image={h.image}
+          name={h.name}
+          setHotelId={setHotelId}
+        />
+      )}
+    </AllHotels>
   );
 };
+
+const AllHotels = styled.div`
+width: 1000px;
+height: auto;
+display: flex;
+flex-wrap: wrap;
+background-color: pink;
+`;

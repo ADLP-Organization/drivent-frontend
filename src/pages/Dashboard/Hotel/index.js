@@ -8,17 +8,22 @@ import useToken from '../../../hooks/useToken';
 
 export default function Hotel() {
   const [bookingData, setBookingData] = useState(null);
-  const [bookingStatus, setBookingStatus] = useState('selected'); //options: available, selected, reserved, unpaid, unavailable
+  const [hotelId, setHotelId] = useState(null);
+  const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
   const token =  useToken();
 
   useEffect( async() => {
     const ticket = await getTicket( token );
-    console.log(ticket);
-    if ( (ticket.ticketTypeId === 2 )|| (ticket.ticketTypeId === 1) ) {
+
+    if ((ticket.ticketTypeId === 2) || (ticket.ticketTypeId === 1)) {
       setBookingStatus('unavailable');
-    } else if (ticket.ticketTypeId === 3 ) {
-      setBookingStatus('available');
+    }
+    if ((ticket.ticketTypeId === 3) && (ticket.status === 'PAID')) {
+      setBookingStatus('available'); 
     };
+    if (ticket.status === 'RESERVED') {
+      setBookingStatus('unpaid'); 
+    }
   }, []);
 
   if (bookingStatus === null) {
@@ -51,6 +56,8 @@ export default function Hotel() {
          <BoxHotels
            setBookingStatus={setBookingStatus}
            setBookingData={setBookingData}
+           hotelId={hotelId}
+           setHotelId={setHotelId}
          />
        </>
       }
@@ -105,6 +112,6 @@ align-items: center;
 justify-content: center;
 height: 50vh;
   img {
-    height: 200px;
+    height: 170px;
   }
 `;
