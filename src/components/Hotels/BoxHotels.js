@@ -5,7 +5,7 @@ import useToken from '../../hooks/useToken';
 import { getHotelsList } from '../../services/hotelApi';
 import CardHotel from './CardHotel';
 
-export default function BoxHotels({ setBookingStatus, setBookingData, setHotelId, hotelId }) {
+export default function BoxHotels({ setBookingStatus, setHotelId }) {
   const token = useToken();
   const [hotels, setHotels] = useState([]);
 
@@ -29,6 +29,7 @@ export default function BoxHotels({ setBookingStatus, setBookingData, setHotelId
           image={h.image}
           name={h.name}
           setHotelId={setHotelId}
+          setBookingStatus={setBookingStatus}
         />
       )}
     </AllHotels>
@@ -36,9 +37,8 @@ export default function BoxHotels({ setBookingStatus, setBookingData, setHotelId
 };
 
 const AllHotels = styled.div`
-width: 1000px;
+width: 100%;
 height: auto;
 display: flex;
 flex-wrap: wrap;
-background-color: pink;
 `;
