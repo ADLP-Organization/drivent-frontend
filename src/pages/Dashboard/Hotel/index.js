@@ -18,7 +18,7 @@ export default function Hotel() {
     if (!ticket.includesHotel) {
       setBookingStatus('unavailable');
     }
-    if (ticket.includesHotel && (ticket.status === 'PAID')) {
+    if (!ticket.includesHotel && (ticket.status === 'PAID')) {
       setBookingStatus('available'); 
     };
     if (ticket.status === 'RESERVED') {
