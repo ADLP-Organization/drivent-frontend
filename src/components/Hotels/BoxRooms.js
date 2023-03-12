@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { postBooking } from '../../services/hotelApi';
 import useToken from '../../hooks/useToken';
 
-export default function BoxRooms({ setBookingStatus, setRoomData } ) {
+export default function BoxRooms({ setBookingStatus, setRoomData, hotels } ) {
   const [clickButton, setClickButton] = useState(false);
   const token = useToken();
 
@@ -23,14 +23,15 @@ export default function BoxRooms({ setBookingStatus, setRoomData } ) {
       });
       setBookingStatus('reserved');
     } catch(err) {
-      alert('Ops, deu ruim');
+      // eslint-disable-next-line no-undef
+      toast('Ops, deu ruim');
     }
   }
 
   return (
     <RoomContainer>
       <Room clickButton = {clickButton} onClick={() => createBooking(37, /*roomInfo*/)}><a>101</a><BsPersonFill size={30} color={'#FF4791'}/></Room>
-      <Room clickButton = {clickButton} onClick={() => createBooking(38, /*roomInfo*/)}><a>102</a><BsPersonFill size={30} color={'#FF4791'}/></Room>
+      <Room clickButton = {clickButton} onClick={() => createBooking(38, /*roomInfo*/)}><a>102</a><BsPersonFill size={30} color={'#FF4791'}/></Room>      
       <Room><a>103</a><BsPerson size={30}/></Room>
       <Room><a>104</a><BsPerson size={30}/></Room>
       <Room><a>201</a><BsPerson size={30}/></Room>

@@ -1,13 +1,12 @@
-import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import BoxHotels from '../../../components/Hotels/BoxHotels';
-import BoxRooms from '../../../components/Hotels/BoxRooms';
 import Booking from '../../../components/Hotels/Booking';
 import { getTicket } from '../../../services/ticketApi';
 import useToken from '../../../hooks/useToken';
+import { Subtitle, Title, Loading } from '../../../components/Hotels';
 
 export default function Hotel() {
-  const [hotelId, setHotelId] = useState(null);
+  const [hotelId, setHotelId] = useState();
   const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
   const [hotels, setHotels] = useState([]);
   const [roomData, setRoomData] = useState({});
@@ -58,24 +57,9 @@ export default function Hotel() {
            setHotelId={setHotelId}
            hotels = {hotels}
            setHotels = {setHotels}
-         />
-       </>
-      }
-      {bookingStatus === 'selected' &&
-       <>
-         <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
-         <BoxHotels
-           setBookingStatus={setBookingStatus}
-           setHotelId={setHotelId}
-           hotels = {hotels}
-           setHotels = {setHotels}
-         />
-         <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
-         <BoxRooms
-           setBookingStatus={setBookingStatus}
            setRoomData = {setRoomData}
          />
-       </>        
+       </>
       }
       {bookingStatus === 'reserved' &&
         <>
@@ -90,36 +74,3 @@ export default function Hotel() {
     </>
   );
 };
-
-const Title = styled.div`
-height: 40px;
-font-family: 'Roboto', sans-serif;
-font-size: 34px;
-font-weight: 400;
-line-height: 40px;
-letter-spacing: 0em;
-text-align: left;
-margin-bottom: 25px;
-`;
-
-const Subtitle = styled.div`
-height: 23px;
-font-family: 'Roboto', sans-serif;
-font-size: 20px;
-font-weight: 400;
-line-height: 23px;
-letter-spacing: 0em;
-text-align: left;
-color: #8E8E8E;
-margin-bottom: 20px;
-`;
-
-const Loading = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-height: 50vh;
-  img {
-    height: 170px;
-  }
-`;
