@@ -1,114 +1,124 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import BoxHotels from '../../../components/Hotels/BoxHotels';
+import BoxRooms from '../../../components/Hotels/BoxRooms';
+import Booking from '../../../components/Hotels/Booking';
+import { getTicket } from '../../../services/ticketApi';
+import useToken from '../../../hooks/useToken';
 
-export const AllHotels = styled.div`
-width: 100%;
-height: auto;
+export default function Hotel() {
+  const [hotelId, setHotelId] = useState(null);
+  const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
+  const [hotels, setHotels] = useState([]);
+  const [roomData, setRoomData] = useState({});
+  const token =  useToken();
+
+  useEffect( async() => {
+    const ticket = await getTicket( token );
+    if (!ticket.TicketType.includesHotel) {
+      setBookingStatus('unavailable');
+    }
+    if (ticket.TicketType.includesHotel && (ticket.status === 'PAID')) {
+      setBookingStatus('available'); 
+    };
+    if (ticket.status === 'RESERVED') {
+      setBookingStatus('unpaid'); 
+    }
+  }, []);
+
+  if (bookingStatus === null) {
+    return (
+      <>
+        <Title>Escolha de hotel e quarto</Title>
+        <Loading>
+          <img src='https://cdn.pixabay.com/animation/2022/10/11/03/16/03-16-39-160_512.gif' alt={'Loading...'}></img>
+        </Loading>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Title>Escolha de hotel e quarto</Title>
+      {bookingStatus === 'unpaid' &&
+       <>
+         <Subtitle>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.</Subtitle>
+       </>
+      }
+      {bookingStatus === 'unavailable' &&
+       <>
+         <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
+       </>
+      }
+      {bookingStatus === 'available' &&
+       <>
+         <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
+         <BoxHotels
+           setBookingStatus={setBookingStatus}
+           setHotelId={setHotelId}
+           hotels = {hotels}
+           setHotels = {setHotels}
+         />
+       </>
+      }
+      {bookingStatus === 'selected' &&
+       <>
+         <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
+         <BoxHotels
+           setBookingStatus={setBookingStatus}
+           setHotelId={setHotelId}
+           hotels = {hotels}
+           setHotels = {setHotels}
+         />
+         <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
+         <BoxRooms
+           setBookingStatus={setBookingStatus}
+           setRoomData = {setRoomData}
+         />
+       </>        
+      }
+      {bookingStatus === 'reserved' &&
+        <>
+          <Subtitle>Você já escolheu o seu quarto:</Subtitle>
+          <Booking
+            hotels = {hotels}
+            roomData = {roomData}
+          />
+        </>
+      }      
+    </>
+  );
+};
+
+const Title = styled.div`
+height: 40px;
+font-family: 'Roboto', sans-serif;
+font-size: 34px;
+font-weight: 400;
+line-height: 40px;
+letter-spacing: 0em;
+text-align: left;
+margin-bottom: 25px;
+`;
+
+const Subtitle = styled.div`
+height: 23px;
+font-family: 'Roboto', sans-serif;
+font-size: 20px;
+font-weight: 400;
+line-height: 23px;
+letter-spacing: 0em;
+text-align: left;
+color: #8E8E8E;
+margin-bottom: 20px;
+`;
+
+const Loading = styled.div`
 display: flex;
-flex-wrap: wrap;
-`;
-
-export const Hotel = styled.div`
-width: 196px;
-height: 264px;
-border-radius: 10px;
-background-color: ${(props) => (props.isClicked? '#FFEED2' : '#F1F1F1')};
-margin-right: 15px;
-margin-bottom: 15px;
-font-family: 'Roboto', sans-serif;
-font-style: normal;
-padding: 10px;
-&:hover {
-  cursor: pointer;
-  background-color: #ccc;
-}
-&> *:nth-child(4) {
-  margin-bottom: 10px;
-}
-h1 {
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 23px;
-  color: #343434;
-  width: 100%;
-  margin: 10px 0px;
-}
-h2 {
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 14px;
-  color: #3C3C3C;
-  width: 100%;
-}
-p {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #3C3C3C;
-  margin: 5px 0px;
-}
-img {
-  width: 168px;
-  height: 109px;
-  border-radius: 5px;
-  position: relative;
-  left: 5px;
-  top: 5px;
-}
-`;
-
-export const RommSeleced = styled.div`
-width: 196px;
-height: 264px;
-border-radius: 10px;
-background-color: #FFEED2;
-margin-right: 15px;
-margin-bottom: 15px;
-font-family: 'Roboto', sans-serif;
-font-style: normal;
-padding: 10px;
-&:hover {
-  cursor: pointer;
-  background-color: #ccc;
-}
-&> *:nth-child(4) {
-  margin-bottom: 10px;
-}
-h1 {
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 23px;
-  color: #343434;
-  width: 100%;
-  margin: 10px 0px;
-}
-h2 {
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 14px;
-  color: #3C3C3C;
-  width: 100%;
-}
-p {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #3C3C3C;
-  margin: 5px 0px;
-}
-img {
-  width: 168px;
-  height: 109px;
-  border-radius: 5px;
-  position: relative;
-  left: 5px;
-  top: 5px;
-}
-`;
-
-export const Container = styled.div`
-width: 100%;
-height: auto;
-`;
-
-export const Rooms = styled.div`
+align-items: center;
+justify-content: center;
+height: 50vh;
+  img {
+    height: 170px;
+  }
 `;
