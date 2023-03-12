@@ -1,13 +1,12 @@
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import useToken from '../../hooks/useToken';
 import { getHotelsList } from '../../services/hotelApi';
 import CardHotel from './CardHotel';
+import { AllHotels } from '../Hotels';
 
-export default function BoxHotels({ setBookingStatus, setHotelId }) {
+export default function BoxHotels({ setBookingStatus, setHotelId, hotels, setHotels}) {
   const token = useToken();
-  const [hotels, setHotels] = useState([]);
 
   useEffect ( async() => {
     try {
@@ -36,9 +35,3 @@ export default function BoxHotels({ setBookingStatus, setHotelId }) {
   );
 };
 
-const AllHotels = styled.div`
-width: 100%;
-height: auto;
-display: flex;
-flex-wrap: wrap;
-`;

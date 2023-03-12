@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import TicketSummary from './TicketSummary';
+import { TitleTicketModel, TicketModel, ButtonChoice1, ButtonChoice2, Price,  TicketType } from '../Selection';
 
 export default function SelectionHotelType({ info, setTicketStatus, setTicketTypeData, ticketTypeData, setTicketId, ticketId }) {
   const [hotelOptonSelected, setHotelOptonSelected] = useState(null);
@@ -43,65 +43,3 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
       { hotelOptonSelected? <TicketSummary setTicketStatus={setTicketStatus} ticketTypeData={ticketTypeData} setTicketId={setTicketId} ticketId={ticketId} />: null }
     </>);
 }
-
-const TitleTicketModel = styled.div`
-height: 23px;
-font-family: 'Roboto', sans-serif;
-font-size: 20px;
-font-weight: 400;
-line-height: 23px;
-letter-spacing: 0em;
-text-align: left;
-color: #8E8E8E;
-margin-top: 13px;
-margin-bottom: 20px;
-`;
-
-const TicketModel = styled.div`
-  width:310px;
-  display: ${(prop) => (prop.info !== [] ? 'flex' : 'none')};
-  flex-wrap: wrap;
-  justify-content: space-between;
-  `;
-
-const ButtonChoice1 = styled.div`
-  height: 145px;
-  width: 145px;
-  border: 1px solid #CECECE;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(prop) => (!prop.selectButton1 ? '#FFFFFF' : '#FFEED2')}; 
-`;
-
-const ButtonChoice2 = styled.div`
-  height: 145px;
-  width: 145px;
-  border: 1px solid #CECECE;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(prop) => (!prop.selectButton2 ? '#FFFFFF' : '#FFEED2')}; 
-`;
-
-const Price = styled.div`
-height: 16px;
-width: 46px;
-border-bottom: 3px;
-font-family: 'Roboto', sans-serif;
-font-size: 14px;
-font-weight: 100;
-line-height: 16px;
-letter-spacing: 0em;
-text-align: center;
-color: #898989;
-`;
-
-const TicketType = styled.div`
-
-`;
-
