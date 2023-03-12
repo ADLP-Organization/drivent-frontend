@@ -5,7 +5,7 @@ import { getHotelsList } from '../../services/hotelApi';
 import CardHotel from './CardHotel';
 import { AllHotels } from '../Hotels';
 
-export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels}) {
+export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels }) {
   const token = useToken();
 
   useEffect ( async() => {
