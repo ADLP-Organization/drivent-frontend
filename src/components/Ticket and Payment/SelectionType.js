@@ -45,7 +45,8 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
     if(info[0].isRemote) {
       setIsPresential(false);
       setIsOnline(true);
-      setTicketTypeData(info[0]);
+      const hotel1 = info.filter( option => option.isRemote === true)
+      setTicketTypeData(hotel1[0]);
     } else {
       setIsPresential(true);
       setIsOnline(false);
@@ -59,7 +60,8 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
     if(info[1].isRemote) {
       setIsPresential(false);
       setIsOnline(true);
-      setTicketTypeData(info[0]);
+      const hotel2 = info.filter( option => option.isRemote === true)
+      setTicketTypeData(hotel2[0]);
     } else {
       setIsPresential(true);
       setIsOnline(false);
