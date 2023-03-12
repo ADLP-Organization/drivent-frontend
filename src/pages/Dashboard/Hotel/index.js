@@ -83,6 +83,7 @@ export default function Hotel() {
           <Booking
             hotels = {hotels}
             roomData = {roomData}
+            setBookingStatus={setBookingStatus}
           />
         </>
       }      
