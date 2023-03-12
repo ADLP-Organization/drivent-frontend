@@ -5,12 +5,12 @@ import { getHotelsList } from '../../services/hotelApi';
 import CardHotel from './CardHotel';
 import { AllHotels } from '../Hotels';
 
-export default function BoxHotels({ setBookingStatus, setHotelId, hotels, setHotels }) {
+export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels }) {
   const token = useToken();
 
   useEffect ( async() => {
     try {
-      const result = await getHotelsList(token);
+      const result= await getHotelsList(token);
       setHotels(result);
     } catch (err) {
       toast('Ops! Algo deu errado.');
