@@ -8,3 +8,13 @@ export async function getHotelsList(token) {
   });
   return response.data;
 };
+
+export async function getRoomsByHotel(token, hotelId) {
+  const response = await api.get('/hotels/1', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(response.data);
+  return response.data;
+};

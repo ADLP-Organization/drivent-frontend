@@ -13,16 +13,16 @@ export default function BoxHotels({ setBookingStatus, setBookingData }) {
     async function HotelsList() {
       try {
         const checkTicket = await getTicketsByUserId(token);
-        console.log(checkTicket);
+        //console.log(checkTicket);
         //if - não pago
         const result = await getHotelsList(token);
         setHotels(result);
         //setBookingData(hotelId)
-        console.log(result);
+        //console.log(result);
         setBookingStatus('available');
       } catch (err) {
         toast('Ops! Algo deu errado.');
-        console.log(err.message);
+        //console.log(err.message);
       }
     }
     HotelsList();

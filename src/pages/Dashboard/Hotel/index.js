@@ -31,7 +31,7 @@ export default function Hotel() {
       </>
     );
   }
-
+  console.log(bookingStatus);
   return (
     <>
       <Title>Escolha de hotel e quarto</Title>
@@ -45,7 +45,7 @@ export default function Hotel() {
           <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
         </>
       }
-      {bookingStatus === 'available' &&
+      {bookingStatus !== 'available' &&
         <>
           <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
           <BoxHotels
@@ -54,10 +54,12 @@ export default function Hotel() {
           />
         </>
       }
-      {bookingStatus === 'selected' &&
+      {bookingStatus !== 'selected' &&
         <>
           <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
-          <BoxHotels />
+          <BoxHotels
+            setBookingStatus={setBookingStatus}
+            setBookingData={setBookingData} />
           <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
           <BoxRooms
             setBookingStatus={setBookingStatus}
