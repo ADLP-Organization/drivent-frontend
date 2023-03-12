@@ -10,15 +10,15 @@ export default function Hotel() {
   const [hotelId, setHotelId] = useState(null);
   const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
   const [hotels, setHotels] = useState([]);
+  const [roomData,setRoomData] = useState({})
   const token =  useToken();
 
   useEffect( async() => {
     const ticket = await getTicket( token );
-
-    if (!ticket.includesHotel) {
+    if (!ticket.TicketType.includesHotel) {
       setBookingStatus('unavailable');
     }
-    if (ticket.includesHotel && (ticket.status === 'PAID')) {
+    if (ticket.TicketType.includesHotel && (ticket.status === 'PAID')) {
       setBookingStatus('available'); 
     };
     if (ticket.status === 'RESERVED') {
@@ -67,10 +67,13 @@ export default function Hotel() {
          <BoxHotels
            setBookingStatus={setBookingStatus}
            setHotelId={setHotelId}
+           hotels = {hotels}
+           setHotels = {setHotels}
          />
          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
          <BoxRooms
            setBookingStatus={setBookingStatus}
+           setRoomData = {setRoomData}
          />
        </>        
       }
@@ -79,6 +82,7 @@ export default function Hotel() {
           <Subtitle>Você já escolheu o seu quarto:</Subtitle>
           <Booking
             hotels = {hotels}
+            roomData = {roomData}
           />
         </>
       }      
