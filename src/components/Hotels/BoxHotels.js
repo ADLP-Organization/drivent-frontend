@@ -6,7 +6,7 @@ import CardHotel from './CardHotel';
 import { AllHotels, Subtitle } from '../Hotels';
 import BoxRooms from './BoxRooms';
 
-export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData }) {
+export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData, isChange }) {
   const [isClicked, setIsClicked] = useState(null);
   const token = useToken();
 
@@ -41,7 +41,15 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
           <BoxRooms
             setBookingStatus={setBookingStatus}
             setRoomData = {setRoomData}
-            hotels = {hotels}
+          /> 
+        </>:
+        null}
+      {isChange?
+        <>  
+          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
+          <BoxRooms
+            setBookingStatus={setBookingStatus}
+            setRoomData = {setRoomData}
           /> 
         </>:
         null}

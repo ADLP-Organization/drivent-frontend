@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { postBooking } from '../../services/hotelApi';
 import useToken from '../../hooks/useToken';
 
-export default function BoxRooms({ setBookingStatus, setRoomData, hotels } ) {
+export default function BoxRooms({ setBookingStatus, setRoomData } ) {
   const [clickButton, setClickButton] = useState(false);
   const token = useToken();
-
+  
   async function createBooking(id, roomInfo) {
+    console.log(id);
     const booking =  {
       'roomId': id
     };

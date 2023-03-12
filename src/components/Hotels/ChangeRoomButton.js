@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import MuiButton from '@material-ui/core/Button';
+import { useState } from 'react';
 
-export default function ChangeRoomButton({ setBookingStatus, setRoomData, hotels }) {
+export default function ChangeRoomButton({ setBookingStatus, setRoomData, roomData, setIsChange }) {
   async function returnRoomsPage() {
     try{
-      setBookingStatus('selected');
+      setRoomData(roomData);
+      setBookingStatus('changeRoom');
+      setIsChange(true);
     } catch(err) {
       alert('Ops, deu ruim');
     }
