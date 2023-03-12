@@ -68,6 +68,7 @@ export default function Hotel() {
             hotels = {hotels}
             roomData = {roomData}
             setBookingStatus={setBookingStatus}
+            setRoomData = {setRoomData}
           />
         </>
       }      
