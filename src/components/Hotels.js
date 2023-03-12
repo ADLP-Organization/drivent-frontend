@@ -11,7 +11,7 @@ export const Hotel = styled.div`
 width: 196px;
 height: 264px;
 border-radius: 10px;
-background-color: ${(props) => (props.isClicked? '#FFEED2' : '#F1F1F1')};
+background-color: ${(props) => (props.isClicked === props.hotelId ? '#FFEED2' : '#F1F1F1')};
 margin-right: 15px;
 margin-bottom: 15px;
 font-family: 'Roboto', sans-serif;
@@ -114,3 +114,39 @@ height: auto;
 
 export const Rooms = styled.div`
 `;
+<<<<<<< HEAD
+=======
+
+export const Title = styled.div`
+height: 40px;
+font-family: 'Roboto', sans-serif;
+font-size: 34px;
+font-weight: 400;
+line-height: 40px;
+letter-spacing: 0em;
+text-align: left;
+margin-bottom: 25px;
+`;
+
+export const Subtitle = styled.div`
+height: 23px;
+font-family: 'Roboto', sans-serif;
+font-size: 20px;
+font-weight: 400;
+line-height: 23px;
+letter-spacing: 0em;
+text-align: left;
+color: #8E8E8E;
+margin-bottom: 20px;
+`;
+
+export const Loading = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+height: 50vh;
+  img {
+    height: 170px;
+  }
+`;
+>>>>>>> e8ef69d15fddf7d7233af625a585c499eab8d78a
