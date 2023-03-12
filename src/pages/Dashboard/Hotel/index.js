@@ -7,17 +7,22 @@ import { getTicket } from '../../../services/ticketApi';
 import useToken from '../../../hooks/useToken';
 
 export default function Hotel() {
-  const [bookingData, setBookingData] = useState(null);
-  const [bookingStatus, setBookingStatus] = useState('selected'); //options: available, selected, reserved, unpaid, unavailable
-  const token = useToken();
+  const [hotelId, setHotelId] = useState(null);
+  const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
+  const [hotels, setHotels] = useState([]);
+  const token =  useToken();
 
-  useEffect(async() => {
-    const ticket = await getTicket(token);
-    console.log(ticket);
-    if ((ticket.ticketTypeId === 2) || (ticket.ticketTypeId === 1)) {
+  useEffect( async() => {
+    const ticket = await getTicket( token );
+
+    if (!ticket.includesHotel) {
       setBookingStatus('unavailable');
-    } else if (ticket.ticketTypeId === 3) {
-      setBookingStatus('available');
+    }
+    if (ticket.includesHotel && (ticket.status === 'PAID')) {
+      setBookingStatus('available'); 
+    };
+    if (ticket.status === 'RESERVED') {
+      setBookingStatus('unpaid'); 
     }
   }, []);
 
@@ -45,32 +50,35 @@ export default function Hotel() {
           <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
         </>
       }
-      {bookingStatus !== 'available' &&
-        <>
-          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
-          <BoxHotels
-            setBookingStatus={setBookingStatus}
-            setBookingData={setBookingData}
-          />
-        </>
+      {bookingStatus === 'available' &&
+       <>
+         <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
+         <BoxHotels
+           setBookingStatus={setBookingStatus}
+           setHotelId={setHotelId}
+           hotels = {hotels}
+           setHotels = {setHotels}
+         />
+       </>
       }
-      {bookingStatus !== 'selected' &&
-        <>
-          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
-          <BoxHotels
-            setBookingStatus={setBookingStatus}
-            setBookingData={setBookingData} />
-          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
-          <BoxRooms
-            setBookingStatus={setBookingStatus}
-          />
-        </>
+      {bookingStatus === 'selected' &&
+       <>
+         <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
+         <BoxHotels
+           setBookingStatus={setBookingStatus}
+           setHotelId={setHotelId}
+         />
+         <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
+         <BoxRooms
+           setBookingStatus={setBookingStatus}
+         />
+       </>        
       }
       {bookingStatus === 'reserved' &&
         <>
           <Subtitle>Você já escolheu o seu quarto:</Subtitle>
           <Booking
-            setBookingStatus={setBookingStatus}
+            hotels = {hotels}
           />
         </>
       }
@@ -107,6 +115,6 @@ align-items: center;
 justify-content: center;
 height: 50vh;
   img {
-    height: 200px;
+    height: 170px;
   }
 `;
