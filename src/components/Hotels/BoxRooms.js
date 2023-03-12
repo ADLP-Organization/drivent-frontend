@@ -4,33 +4,33 @@ import { useState } from 'react';
 import { postBooking } from '../../services/hotelApi';
 import useToken from '../../hooks/useToken';
 
-export default function BoxRooms({ setBookingStatus, setRoomData } ) {
+export default function BoxRooms({ setBookingStatus, setRoomData, hotels } ) {
   const [clickButton, setClickButton] = useState(false);
   const token = useToken();
 
-  async function createBooking (id, roomInfo) {
+  async function createBooking(id, roomInfo) {
     const booking =  {
-      "roomId": id
-    }
+      'roomId': id
+    };
     try{
-      await postBooking(token, booking)
+      await postBooking(token, booking);
       setRoomData({
-      name: '104',
-      capacity: 3,
-      hotelId: 1,
-      createdAt: '23-03-2022',
-      updatedAt: '23-03-2022',
-      })
-      setBookingStatus('reserved')
-    } catch(err){
-      alert("Ops, deu ruim")
+        name: '104',
+        capacity: 3,
+        hotelId: 1,
+        createdAt: '23-03-2022',
+        updatedAt: '23-03-2022',
+      });
+      setBookingStatus('reserved');
+    } catch(err) {
+      // eslint-disable-next-line no-undef
+      toast('Ops, deu ruim');
     }
-    
   }
 
   return (
     <RoomContainer>
-      <Room clickButton = {clickButton} onClick={() => createBooking(1, roomInfo)}><a>101</a><BsPersonFill size={30} color={'#FF4791'}/></Room>
+      <Room clickButton = {clickButton} onClick={() => createBooking(1)}><a>101</a><BsPersonFill size={30} color={'#FF4791'}/></Room>
       <Room><a>102</a><BsPerson size={30}/></Room>
       <Room><a>103</a><BsPerson size={30}/></Room>
       <Room><a>104</a><BsPerson size={30}/></Room>
