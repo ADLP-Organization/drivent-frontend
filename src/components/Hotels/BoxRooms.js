@@ -5,18 +5,20 @@ import useToken from '../../hooks/useToken';
 import { useEffect } from 'react';
 import { getRoomsByHotel } from '../../services/hotelApi';
 import Rooms from './Rooms';
+import { toast } from 'react-toastify';
 
 export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
+  // console.log(isClicked);
+  const roomId = 37;
   const token = useToken();
   const [rooms, setRooms] = useState([]);
   const [isClicked, setIsClicked] = useState(null);
-  console.log();
   useEffect(() => {
     async function HotelsList() {
       try {
-        const result = await getRoomsByHotel(token/* , hotelId */);
+        const result = await getRoomsByHotel(token, roomId );
         setRooms(result.Rooms);
-        console.log(result);
+        //console.log(result);
       } catch (err) {
         console.log(err.message);
       }
@@ -24,19 +26,18 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
     HotelsList();
   }, []);
 
-  /* async function createBooking(id, roomInfo) {
-
+  async function createBooking(roomId, roomInfo) {
     const booking =  {
-      'roomId': id
+      'roomId': roomId
     };
     try{
       await postBooking(token, booking);
       setRoomData({
         name: '104',
         capacity: 3,
-        hotelId: 1,
-        createdAt: '23-03-2022',
-        updatedAt: '23-03-2022',
+        hotelId: 37,
+        createdAt: '23-02-2022',
+        updatedAt: '13-03-2022',
       });
       setBookingStatus('reserved');
     } catch(err) {
@@ -44,13 +45,13 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
       toast('Ops, deu ruim');
     }
   }
- */
+ 
   return (
     <>
       <RoomContainer>
         {rooms.map((info) => <Rooms key={info.id} info={info} setRoomData={setRoomData} setIsClicked={setIsClicked} isClicked={isClicked} />)}
       </RoomContainer>
-      <ButtonConfirmRoom>RESERVAR QUARTO</ButtonConfirmRoom>
+      <ButtonConfirmRoom onClick={() => createBooking(37, /*roomInfo*/)}>RESERVAR QUARTO</ButtonConfirmRoom>
     </>
 
   );

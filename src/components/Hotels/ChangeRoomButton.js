@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 import MuiButton from '@material-ui/core/Button';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function ChangeRoomButton({ setBookingStatus, setRoomData, roomData, setIsChange }) {
+  //console.log(isClicked);
   async function returnRoomsPage() {
     try{
       setRoomData(roomData);
       setBookingStatus('changeRoom');
       setIsChange(true);
     } catch(err) {
-      alert('Ops, deu ruim');
+      toast('Ops, deu ruim');
     }
   }
   return(

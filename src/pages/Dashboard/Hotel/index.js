@@ -5,12 +5,13 @@ import { getTicket } from '../../../services/ticketApi';
 import useToken from '../../../hooks/useToken';
 import { Subtitle, Title, Loading } from '../../../components/Hotels';
 
-export default function Hotel() {
+export default function Hotel(isClicked, setIsClicked) {
   const [hotelId, setHotelId] = useState();
   const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
   const [hotels, setHotels] = useState([]);
   const [roomData, setRoomData] = useState({});
   const [isChange, setIsChange] = useState(false);
+  
   const token =  useToken();
 
   useEffect( async() => {
@@ -36,7 +37,7 @@ export default function Hotel() {
       </>
     );
   }
-  console.log(bookingStatus);
+  //console.log(bookingStatus);
   return (
     <>
       <Title>Escolha de hotel e quarto</Title>
@@ -76,6 +77,19 @@ export default function Hotel() {
           />
         </>
       }
+      {bookingStatus === 'changeRoom' &&
+      <>
+        <BoxHotels
+          setBookingStatus={setBookingStatus}
+          setHotelId={setHotelId}
+          hotels = {hotels}
+          setHotels = {setHotels}
+          setRoomData = {setRoomData}
+          isChange = {isChange}
+          setIsChange = {setIsChange}
+        />
+      </>
+      }     
     </>
   );
 };

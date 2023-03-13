@@ -1,7 +1,7 @@
 import { RommSeleced, Container } from '../Hotels';
 import ChangeRoomButton from './ChangeRoomButton';
 
-export default function Booking( { hotels, roomData, setBookingStatus, setRoomData, setIsChange, isChange }) {
+export default function Booking( { hotels, roomData, setBookingStatus, setRoomData, setIsChange, isChange, selectedRoom, setSelectedRoom }) {
   let typeRoom;
 
   if (roomData.capacity === 1) typeRoom = 'Single';

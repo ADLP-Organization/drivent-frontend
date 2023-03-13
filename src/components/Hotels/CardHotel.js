@@ -1,13 +1,19 @@
 import { Hotel, Rooms } from '../Hotels';
 
-export default function CardHotel({ id, image, name, setHotelId, setIsClicked, isClicked  }) {
+export default function CardHotel({ id, image, name, setHotelId, setIsClicked, isClicked }) {
   function selectHotel() {
     setHotelId(id);
     setIsClicked(id);
   }; 
 
   return (
-    <Hotel id={id} isClicked={isClicked} hotelId={ id } onClick={selectHotel}>
+    <Hotel 
+      id={id}
+      isClicked={isClicked}
+      setIsClicked = {setIsClicked}
+      hotelId={ id }
+      onClick={selectHotel}
+    >
       <img src={image} alt='Hotel'/>
       <h1>{name}</h1>
       <h2>Tipos de acomodação:</h2>

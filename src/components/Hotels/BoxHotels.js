@@ -7,11 +7,12 @@ import { AllHotels, Subtitle } from '../Hotels';
 import BoxRooms from './BoxRooms';
 import { getTicket } from '../../services/ticketApi';
 
-export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData, isChange }) {
+export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData, isChange, selectedRoom, setSelectedRoom }) {
   const token = useToken();
   const [isClicked, setIsClicked] = useState(null);
   const [capacity, setCapacity] = useState([]);
   const [roomTypes, setRoomTypes] = useState([]); 
+  //const [selectedRoom, setSelectedRoom] = useState(null);
   let result;
 
   function tipos() {
@@ -36,7 +37,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
     async function HotelsList() {
       try {
         const checkTicket = await getTicket(token);
-        console.log(checkTicket);
+        //console.log(checkTicket);
         //if - não pago
         result = await getHotelsList(token);
         setHotels(result.hotelsList);
@@ -49,7 +50,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
         const ocupado = ocupados(); 
   
         setBookingStatus('available');
-        console.log(result);
+        // console.log(result);
       } catch (err) {
         toast('Ops! Algo deu errado.');
         console.log(err.message);
