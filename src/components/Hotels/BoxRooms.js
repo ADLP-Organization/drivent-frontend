@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
   const token = useToken();
   const [rooms, setRooms] = useState([]);
-  const [isClicked, setIsClicked] = useState(null);
+  const [isClickedRoom, setIsClickedRoom] = useState(null);
   
   useEffect(() => {
     async function HotelsList() {
@@ -26,7 +26,7 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
   
   async function reserve() {
     const booking =  {
-      'roomId': isClicked
+      'roomId': isClickedRoom
     };
     const existentBooking = await getBookingList(token);
     if(existentBooking === undefined || existentBooking === []) {
@@ -46,7 +46,7 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
   return (
     <>
       <RoomContainer>
-        {rooms.map((info) => <Rooms key={info.id} info={info} setRoomData={setRoomData} setIsClicked={setIsClicked} isClicked={isClicked} />)}
+        {rooms.map((info) => <Rooms key={info.id} info={info} setRoomData={setRoomData} setIsClicked={setIsClickedRoom} isClicked={isClickedRoom} />)}
       </RoomContainer>
       <ButtonConfirmRoom onClick={reserve}>RESERVAR QUARTO</ButtonConfirmRoom>
     </>
@@ -67,7 +67,10 @@ height: 37px;
 width: 182px;
 border-radius: 4px;
 background-color: #E0E0E0;
+display: flex;
+justify-content: center;
+align-items: center;
 cursor: pointer;
-
+margin-top: 30px;
 `;
 

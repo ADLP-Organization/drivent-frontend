@@ -19,17 +19,18 @@ export default function CardHotel({ id, image, name, setHotelId, setIsClicked, i
     if (rooms.some(r => r.capacity === 3)) stringTypes.length>0 ? stringTypes += ', Triple' : stringTypes += 'Triple';
     
     return stringTypes;
-  }
+  };
 
   function busyRooms(id) {
-    capacity = ((capacity.filter(hotel => hotel.hotelId === id))[0]._sum.capacity); 
+    console.log(id);
+    capacity = ((capacity.filter(hotel => hotel.hotelId === id))[0]._sum.capacity);
     let occupancy  = 0;
     const rooms  = hotels.filter(hotel => hotel.id === id).map((room) => { return room.Rooms;} )[0];
     rooms.map((room) => occupancy  += (room.Booking.length));
     vaccancy = capacity - occupancy;
 
     return vaccancy;
-  }
+  };
 
   return (
     <Hotel id={id} isClicked={isClicked} hotelId={ id } onClick={selectHotel}>

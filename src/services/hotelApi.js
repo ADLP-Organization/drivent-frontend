@@ -47,6 +47,5 @@ export async function getRoomsByHotel(token, hotelId) {
       Authorization: `Bearer ${token}`,
     },
   });
-  //console.log(response.data);
   return response.data;
 };

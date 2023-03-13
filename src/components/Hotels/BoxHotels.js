@@ -20,9 +20,9 @@ export default function BoxHotels({ setBookingStatus, bookingStatus, hotels, set
         setRoomTypes(result.roomTypes);
         setCapacity(result.capacity);
         setBookingStatus('available');
-        //console.log(result);
       } catch (err) {
         toast('Ops! Algo deu errado.');
+        // eslint-disable-next-line
         console.log(err.message);
       }
     }
