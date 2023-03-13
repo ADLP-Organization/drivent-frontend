@@ -138,6 +138,20 @@ color: #8E8E8E;
 margin-bottom: 20px;
 `;
 
+export const OnlySubtitle = styled.div`
+height: 80%;
+font-family: 'Roboto', sans-serif;
+font-size: 20px;
+font-weight: 400;
+line-height: 23px;
+letter-spacing: 0em;
+color: #8E8E8E;
+text-align: center;
+display: flex;
+justify-content: center;
+align-items: center;
+`;
+
 export const Loading = styled.div`
 display: flex;
 align-items: center;
