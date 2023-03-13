@@ -6,11 +6,11 @@ import { useEffect } from 'react';
 import { getRoomsByHotel } from '../../services/hotelApi';
 import Rooms from './Rooms';
 
-export default function BoxRooms({ setBookingStatus, setRoomData, hotels } ) {
-  const [clickButton, setClickButton] = useState(false);
+export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
   const token = useToken();
   const [rooms, setRooms] = useState([]);
-
+  const [isClicked, setIsClicked] = useState(null);
+  console.log();
   useEffect(() => {
     async function HotelsList() {
       try {
@@ -24,7 +24,7 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels } ) {
     HotelsList();
   }, []);
 
-  async function createBooking(id, roomInfo) {
+  /* async function createBooking(id, roomInfo) {
     const booking =  {
       'roomId': id
     };
@@ -43,11 +43,14 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels } ) {
       toast('Ops, deu ruim');
     }
   }
-
+ */
   return (
-    <RoomContainer>
-      {rooms.map((info) => <Rooms key={info.id} info={info} />)}
-    </RoomContainer>
+    <>
+      <RoomContainer>
+        {rooms.map((info) => <Rooms key={info.id} info={info} setRoomData={setRoomData} setIsClicked={setIsClicked} isClicked={isClicked} />)}
+      </RoomContainer>
+      <ButtonConfirmRoom>RESERVAR QUARTO</ButtonConfirmRoom>
+    </>
   );
 };
 
@@ -58,3 +61,11 @@ display: flex;
 flex-direction: column;
 flex-wrap: wrap;
 `;
+
+const ButtonConfirmRoom = styled.div`
+height: 37px;
+width: 182px;
+border-radius: 4px;
+background-color: #E0E0E0;
+`;
+

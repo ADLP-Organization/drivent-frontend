@@ -57,6 +57,7 @@ export default function Hotel() {
            setHotelId={setHotelId}
            hotels = {hotels}
            setHotels = {setHotels}
+           roomData = {roomData}
            setRoomData = {setRoomData}
          />
        </>
