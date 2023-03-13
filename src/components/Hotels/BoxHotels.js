@@ -80,6 +80,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
           <BoxRooms
             setBookingStatus={setBookingStatus}
             setRoomData = {setRoomData}
+            hotelId = {isClicked}
           /> 
         </>:
         null}
@@ -89,6 +90,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
           <BoxRooms
             setBookingStatus={setBookingStatus}
             setRoomData = {setRoomData}
+            hotelId = {isClicked}
           /> 
         </>:
         null}
