@@ -1,6 +1,8 @@
 import { BsPerson, BsPersonFill } from 'react-icons/bs';
+import { Icon } from './Rooms';
 
-export default function PersonIcons({ roomId, vacancies, placesOccupied, setColor }) {
+
+export default function PersonIcons({ vacancies, placesOccupied, setColor, isClicked, id }) {
   let roomDescription = [];
 
   if (vacancies === 0) {
@@ -10,7 +12,11 @@ export default function PersonIcons({ roomId, vacancies, placesOccupied, setColo
     }
   } else {
     for (let i = 0; i < vacancies; i++) {
-      roomDescription.push(<BsPerson size={30} />);
+      if( i === 0 ) {
+        roomDescription.push(<Icon isClicked={isClicked} id={id}><BsPerson size={30} /></Icon>);
+      }else {
+        roomDescription.push(<Icon><BsPerson size={30} /></Icon>);
+      }; 
     }
 
     for (let j = 0; j < placesOccupied; j++) {
@@ -18,8 +24,6 @@ export default function PersonIcons({ roomId, vacancies, placesOccupied, setColo
     }
   }
   return (
-    <>
-      {roomDescription}
-    </>
+    <></>
   );
 }
