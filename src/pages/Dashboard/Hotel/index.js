@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import BoxHotels from '../../../components/Hotels/BoxHotels';
 import Booking from '../../../components/Hotels/Booking';
 import { getTicket } from '../../../services/ticketApi';
@@ -11,7 +10,7 @@ export default function Hotel() {
   const [bookingStatus, setBookingStatus] = useState(null); //options: available, reserved, unpaid, unavailable
   const [hotels, setHotels] = useState([]);
   const [roomData, setRoomData] = useState({});
-  const [isChange, setIsChange] = useState(false);
+
   const token =  useToken();
 
   useEffect( async() => {
@@ -40,7 +39,6 @@ export default function Hotel() {
       </>
     );
   }
-
   return (
     <>
       <Title>Escolha de hotel e quarto</Title>
@@ -55,6 +53,7 @@ export default function Hotel() {
          <Subtitle>Primeiro, escolha seu hotel:</Subtitle>
          <BoxHotels
            setBookingStatus={setBookingStatus}
+           bookingStatus={bookingStatus}
            setHotelId={setHotelId}
            hotels = {hotels}
            setHotels = {setHotels}
@@ -71,11 +70,21 @@ export default function Hotel() {
             roomData = {roomData}
             setBookingStatus={setBookingStatus}
             setRoomData={setRoomData}
-            isChange = {isChange}
-            setIsChange = {setIsChange}
           />
         </>
       }
+      {bookingStatus === 'changeRoom' &&
+      <>
+        <BoxHotels
+          setBookingStatus={setBookingStatus}
+          bookingStatus={bookingStatus}
+          setHotelId={setHotelId}
+          hotels = {hotels}
+          setHotels = {setHotels}
+          setRoomData = {setRoomData}
+        />
+      </>
+      }     
     </>
   );
 };
