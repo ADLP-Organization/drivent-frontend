@@ -5,19 +5,57 @@ import { getHotelsList } from '../../services/hotelApi';
 import CardHotel from './CardHotel';
 import { AllHotels, Subtitle } from '../Hotels';
 import BoxRooms from './BoxRooms';
+import { getTicket } from '../../services/ticketApi';
 
 export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData, isChange }) {
-  const [isClicked, setIsClicked] = useState(null);
   const token = useToken();
+  const [isClicked, setIsClicked] = useState(null);
+  const [capacity, setCapacity] = useState([]);
+  const [roomTypes, setRoomTypes] = useState([]); 
+  let result;
 
-  useEffect ( async() => {
-    try {
-      const result= await getHotelsList(token);
-      setHotels(result);
-    } catch (err) {
-      toast('Ops! Algo deu errado.');
-    };
-  }, [token]);
+  function tipos() {
+    const quartos = (result.roomTypes.filter(hotel => hotel.hotelId === 1));
+    let tiposQuartos = '';
+    if (quartos.some(quarto => quarto.capacity === 1)) tiposQuartos += 'Single';
+    if (quartos.some(quarto => quarto.capacity === 2)) tiposQuartos += ', Double';
+    if (quartos.some(quarto => quarto.capacity === 3)) tiposQuartos += ', Triple';
+
+    return tiposQuartos;
+  }
+
+  function ocupados() {
+    let ocupacao = 0;
+    const quartos  = result.hotelsList.filter(hotel => hotel.id === 1).map((quarto) => { return quarto.Rooms;} )[0];
+    quartos.map((quarto) => ocupacao +=(quarto.Booking.length));
+
+    return ocupacao;
+  }
+
+  useEffect(() => {
+    async function HotelsList() {
+      try {
+        const checkTicket = await getTicket(token);
+        console.log(checkTicket);
+        //if - não pago
+        result = await getHotelsList(token);
+        setHotels(result.hotelsList);
+        setCapacity(result.capacity);
+        setRoomTypes(result.roomTypes);
+        //setBookingData(hotelId)
+
+        const capacidade = ((result.capacity.filter(hotel => hotel.hotelId === 1))[0]._sum.capacity);
+        const tipo = tipos();
+        const ocupado = ocupados(); 
+  
+        setBookingStatus('available');
+      } catch (err) {
+        toast('Ops! Algo deu errado.');
+        console.log(err.message);
+      }
+    }
+    HotelsList();
+  }, []);
 
   return (
     <>
@@ -56,4 +94,3 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
     </>
   );
 };
-
