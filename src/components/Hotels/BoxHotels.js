@@ -7,7 +7,7 @@ import { AllHotels, Subtitle } from '../Hotels';
 import BoxRooms from './BoxRooms';
 import { getTicket } from '../../services/ticketApi';
 
-export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData }) {
+export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData, isChange }) {
   const token = useToken();
   const [isClicked, setIsClicked] = useState(null);
   const [capacity, setCapacity] = useState([]);
@@ -79,7 +79,15 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
           <BoxRooms
             setBookingStatus={setBookingStatus}
             setRoomData = {setRoomData}
-            hotels = {hotels}
+          /> 
+        </>:
+        null}
+      {isChange?
+        <>  
+          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
+          <BoxRooms
+            setBookingStatus={setBookingStatus}
+            setRoomData = {setRoomData}
           /> 
         </>:
         null}
