@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import BoxHotels from '../../../components/Hotels/BoxHotels';
 import Booking from '../../../components/Hotels/Booking';
 import { getTicket } from '../../../services/ticketApi';
@@ -40,14 +41,14 @@ export default function Hotel() {
     <>
       <Title>Escolha de hotel e quarto</Title>
       {bookingStatus === 'unpaid' &&
-       <>
+       <Container>
          <Subtitle>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.</Subtitle>
-       </>
+       </Container>
       }
       {bookingStatus === 'unavailable' &&
-       <>
+       <Container>
          <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
-       </>
+       </Container>
       }
       {bookingStatus === 'available' &&
        <>
@@ -73,3 +74,9 @@ export default function Hotel() {
     </>
   );
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+`;
