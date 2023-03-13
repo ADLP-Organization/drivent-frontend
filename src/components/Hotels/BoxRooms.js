@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { getRoomsByHotel } from '../../services/hotelApi';
 import Rooms from './Rooms';
 
-export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
+export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
   const token = useToken();
   const [rooms, setRooms] = useState([]);
   const [isClicked, setIsClicked] = useState(null);
@@ -14,7 +14,7 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
   useEffect(() => {
     async function HotelsList() {
       try {
-        const result = await getRoomsByHotel(token/* , hotelId */);
+        const result = await getRoomsByHotel(token, hotelId);
         setRooms(result.Rooms);
         console.log(result);
       } catch (err) {
@@ -22,35 +22,27 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
       }
     }
     HotelsList();
-  }, []);
+  }, [hotelId]);
 
-  /* async function createBooking(id, roomInfo) {
-
+  async function createBooking() {
     const booking =  {
-      'roomId': id
+      'roomId': isClicked
     };
     try{
       await postBooking(token, booking);
-      setRoomData({
-        name: '104',
-        capacity: 3,
-        hotelId: 1,
-        createdAt: '23-03-2022',
-        updatedAt: '23-03-2022',
-      });
       setBookingStatus('reserved');
     } catch(err) {
       // eslint-disable-next-line no-undef
-      toast('Ops, deu ruim');
+      toast('Ops, Algo deu errado');
     }
   }
- */
+
   return (
     <>
       <RoomContainer>
         {rooms.map((info) => <Rooms key={info.id} info={info} setRoomData={setRoomData} setIsClicked={setIsClicked} isClicked={isClicked} />)}
       </RoomContainer>
-      <ButtonConfirmRoom>RESERVAR QUARTO</ButtonConfirmRoom>
+      <ButtonConfirmRoom onClick={createBooking}>RESERVAR QUARTO</ButtonConfirmRoom>
     </>
 
   );
@@ -69,5 +61,7 @@ height: 37px;
 width: 182px;
 border-radius: 4px;
 background-color: #E0E0E0;
+cursor: pointer;
+
 `;
 

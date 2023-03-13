@@ -12,6 +12,7 @@ export default function Rooms({ info, setRoomData, setIsClicked, isClicked }) {
   
   function selectRoom() {
     setIsClicked(info.id);
+    setRoomData(info);
   }
 
   let roomDescription = [];
@@ -21,26 +22,6 @@ export default function Rooms({ info, setRoomData, setIsClicked, isClicked }) {
   for (let j = 0; j < placesOccupied; j++) {
     roomDescription.push(<BsPersonFill size={30} />);
   }
-
-  /* async function createBooking(id, roomInfo) {
-    const booking =  {
-      'roomId': id
-    };
-    try{
-      await postBooking(token, booking);
-      setRoomData({
-        name: '104',
-        capacity: 3,
-        hotelId: 1,
-        createdAt: '23-03-2022',
-        updatedAt: '23-03-2022',
-      });
-      setBookingStatus('reserved');
-    } catch(err) {
-      // eslint-disable-next-line no-undef
-      toast('Ops, deu ruim');
-    }
-  } */
 
   return (
     <Room onClick={selectRoom} isClicked={isClicked} roomId={info.id}><a>{info.name}</a><PersonIcons>{roomDescription}</PersonIcons></Room>
