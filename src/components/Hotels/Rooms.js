@@ -14,17 +14,20 @@ export default function Rooms({ info, setRoomData, setIsClicked, isClicked }) {
     setIsClicked(info.id);
     setRoomData(info);
   }
-
   let roomDescription = [];
   for (let i = 0; i < vacancies; i++) {
-    roomDescription.push(<BsPerson size={30} />);
+    if( i === (vacancies -1) ) {
+      roomDescription.push(<Icon isClicked={isClicked} id={info.id}><BsPerson size={30} /></Icon>);
+    }else {
+      roomDescription.push(<Icon isClicked={isClicked} id={0}><BsPerson size={30} /></Icon>);
+    }; 
   }
   for (let j = 0; j < placesOccupied; j++) {
     roomDescription.push(<BsPersonFill size={30} />);
   }
 
   return (
-    <Room onClick={selectRoom} isClicked={isClicked} roomId={info.id}><a>{info.name}</a><PersonIcons>{roomDescription}</PersonIcons></Room>
+    <Room onClick={selectRoom} isClicked={isClicked} roomId={info.id}><a>{info.name}</a><PersonIcons isClicked={isClicked} id={info.id}>{roomDescription}</PersonIcons></Room>
   );
 };
 
@@ -39,7 +42,6 @@ const Room = styled.div`
   padding-right: 12.28px;
   margin-bottom: 8px;
   background-color: ${(props) => (props.isClicked === props.roomId? '#FFEED2' : '#FFFFFF')};
-  color:${(props) => (props.isClicked === props.roomId? '#FF4791' : '')};;
   a{
     height: 23px;
     width: 35px;
@@ -60,4 +62,8 @@ const Room = styled.div`
 
 const PersonIcons = styled.div`
 
+`;
+
+export const Icon = styled.span`
+ color:${(props) => (props.isClicked === props.id? '#FF4791' : '')};
 `;

@@ -9,7 +9,7 @@ import Rooms from './Rooms';
 export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
   const token = useToken();
   const [rooms, setRooms] = useState([]);
-  const [isClicked, setIsClicked] = useState(null);
+  const [isClickedRoom, setIsClickedRoom] = useState(null);
   console.log();
   useEffect(() => {
     async function HotelsList() {
@@ -26,7 +26,7 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
 
   async function createBooking() {
     const booking =  {
-      'roomId': isClicked
+      'roomId': isClickedRoom
     };
     try{
       await postBooking(token, booking);
@@ -40,7 +40,7 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
   return (
     <>
       <RoomContainer>
-        {rooms.map((info) => <Rooms key={info.id} info={info} setRoomData={setRoomData} setIsClicked={setIsClicked} isClicked={isClicked} />)}
+        {rooms.map((info) => <Rooms key={info.id} info={info} setRoomData={setRoomData} setIsClicked={setIsClickedRoom} isClicked={isClickedRoom} />)}
       </RoomContainer>
       <ButtonConfirmRoom onClick={createBooking}>RESERVAR QUARTO</ButtonConfirmRoom>
     </>
