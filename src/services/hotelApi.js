@@ -8,7 +8,29 @@ export async function getHotelsList(token) {
   });
   return response.data;
 };
-export async function updateBooking( token, booking) {}
+export async function getBookingList( token, ) {
+  try{
+    const response = await api.get('/booking', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }catch(e) {
+    if(e.name === 'Not Found') {
+      return [];
+    }
+  }
+}
+
+export async function upsertBooking(token, booking, bookingId) {
+  const response = await api.put(`booking/${bookingId}`, booking, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
 
 export async function postBooking( token, booking) {
   const response = await api.post('/booking', booking, {
@@ -16,7 +38,6 @@ export async function postBooking( token, booking) {
       Authorization: `Bearer ${token}`,
     },
   });
-  //console.log(response.data);
   return response.data;
 };
 
