@@ -11,27 +11,28 @@ export default function Rooms({ info, setRoomData, setIsClicked, isClicked }) {
   const capacity = info.capacity;
   const placesOccupied = info.Booking.length;
   const vacancies = capacity - placesOccupied;
+  let roomDescription = [];
 
   function selectRoom() {
     setIsClicked(info.id);
     setRoomData(info);
-  
-    let roomDescription = [];
-    for (let i = 0; i < vacancies; i++) {
-      if( i === (vacancies -1) ) {
-        roomDescription.push(<Icon isClicked={isClicked} id={info.id}><BsPerson size={30} /></Icon>);
-      }else {
-        roomDescription.push(<Icon isClicked={isClicked} id={0}><BsPerson size={30} /></Icon>);
-      }; 
-    }
-    for (let j = 0; j < placesOccupied; j++) {
-      roomDescription.push(<BsPersonFill size={30} />);
-    }
-}
+  };
+
   return (
-    <Room onClick={selectRoom} isClicked={isClicked} roomId={info.id}><a>{info.name}</a><PersonIcons isClicked={isClicked} id={info.id}>{roomDescription}</PersonIcons></Room>
+    <Room onClick={selectRoom} isClicked={isClicked} roomId={info.id} color={color}><a>{info.name}</a>
+      <ContainerPersonIcons>
+        <PersonIcons isClicked={isClicked}
+          id={info.id}
+          capacity={capacity}
+          vacancies={vacancies}
+          placesOccupied={placesOccupied}
+          setColor={setColor}>
+        </PersonIcons>
+      </ContainerPersonIcons >
+    </Room>
+
   );
-};
+}
 
 const Room = styled.div`
   height: 45px;
@@ -43,7 +44,7 @@ const Room = styled.div`
   justify-content: space-between;
   padding-right: 12.28px;
   margin-bottom: 8px;
-  background-color: ${(props) => (props.isClicked === props.roomId? '#FFEED2' : '#FFFFFF')};
+  background-color: ${(props) => (props.isClicked === props.roomId ? '#FFEED2' : props.color)};
   a{
     height: 23px;
     width: 35px;
@@ -55,16 +56,14 @@ const Room = styled.div`
     color: #454545;
     margin-left:16px;
   }
-
   &:hover {
   cursor: pointer;
   background-color: #ccc;
 }
 `;
 const ContainerPersonIcons = styled.div`
-
 `;
 
 export const Icon = styled.span`
- color:${(props) => (props.isClicked === props.id? '#FF4791' : '')};
+ color:${(props) => (props.isClicked === props.id ? '#FF4791' : '')};
 `;
