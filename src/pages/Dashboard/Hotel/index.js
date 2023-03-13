@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import BoxHotels from '../../../components/Hotels/BoxHotels';
 import Booking from '../../../components/Hotels/Booking';
 import { getTicket } from '../../../services/ticketApi';
@@ -70,7 +71,7 @@ export default function Hotel() {
             isChange = {isChange}
             setIsChange = {setIsChange}
           />
-        </>
+        </>}
     </>
   );
 };
