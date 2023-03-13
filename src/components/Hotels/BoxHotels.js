@@ -49,6 +49,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
         const ocupado = ocupados(); 
   
         setBookingStatus('available');
+        console.log(result);
       } catch (err) {
         toast('Ops! Algo deu errado.');
         console.log(err.message);

@@ -36,19 +36,19 @@ export default function Hotel() {
       </>
     );
   }
-
+  console.log(bookingStatus);
   return (
     <>
       <Title>Escolha de hotel e quarto</Title>
       {bookingStatus === 'unpaid' &&
-       <>
-         <Subtitle>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.</Subtitle>
-       </>
+        <>
+          <Subtitle>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.</Subtitle>
+        </>
       }
       {bookingStatus === 'unavailable' &&
-       <>
-         <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
-       </>
+        <>
+          <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
+        </>
       }
       {bookingStatus === 'available' &&
        <>
@@ -58,6 +58,7 @@ export default function Hotel() {
            setHotelId={setHotelId}
            hotels = {hotels}
            setHotels = {setHotels}
+           roomData = {roomData}
            setRoomData = {setRoomData}
          />
        </>
@@ -74,20 +75,6 @@ export default function Hotel() {
             setIsChange = {setIsChange}
           />
         </>
-      }    
-      {bookingStatus === 'changeRoom' &&
-      <>
-        <BoxHotels
-          setBookingStatus={setBookingStatus}
-          setHotelId={setHotelId}
-          hotels = {hotels}
-          setHotels = {setHotels}
-          setRoomData = {setRoomData}
-          isChange = {isChange}
-          setIsChange = {setIsChange}
-        />
-      </>
-      }     
     </>
   );
 };
