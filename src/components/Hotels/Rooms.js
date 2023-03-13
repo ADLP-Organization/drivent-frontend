@@ -14,8 +14,10 @@ export default function Rooms({ info, setRoomData, setIsClicked, isClicked }) {
   let roomDescription = [];
 
   function selectRoom() {
-    setIsClicked(info.id);
-    setRoomData(info);
+    if(color !== '#E9E9E9') {
+      setIsClicked(info.id);
+      setRoomData(info);
+    }
   };
 
   return (
@@ -45,6 +47,7 @@ const Room = styled.div`
   padding-right: 12.28px;
   margin-bottom: 8px;
   background-color: ${(props) => (props.isClicked === props.roomId ? '#FFEED2' : props.color)};
+  color:${(props) => (props.color === '#E9E9E9' ? '#8C8C8C' : '')};
   a{
     height: 23px;
     width: 35px;
@@ -53,12 +56,12 @@ const Room = styled.div`
     font-weight: 700;
     line-height: 23px;
     text-align: center;
-    color: #454545;
+    color:${(props) => (props.color === '#E9E9E9' ? '#9D9D9D' : '')};
     margin-left:16px;
   }
   &:hover {
-  cursor: pointer;
-  background-color: #ccc;
+  cursor: ${(props) => (props.color === '#E9E9E9' ? 'initial' : 'pointer')};
+  background-color:${(props) => (props.color === '#E9E9E9' ? '' : '#ccc')};;
 }
 `;
 const ContainerPersonIcons = styled.div`
