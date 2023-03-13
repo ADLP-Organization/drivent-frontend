@@ -18,12 +18,15 @@ export default function Hotel() {
     const ticket = await getTicket( token );
     if (!ticket.TicketType.includesHotel) {
       setBookingStatus('unavailable');
+      return;
     }
     if (ticket.TicketType.includesHotel && (ticket.status === 'PAID')) {
       setBookingStatus('available'); 
-    };
+      return;
+    }
     if (ticket.status === 'RESERVED') {
       setBookingStatus('unpaid'); 
+      return;
     }
   }, []);
 
@@ -37,7 +40,7 @@ export default function Hotel() {
       </>
     );
   }
-  console.log(bookingStatus);
+
   return (
     <>
       <Title>Escolha de hotel e quarto</Title>
@@ -71,7 +74,8 @@ export default function Hotel() {
             isChange = {isChange}
             setIsChange = {setIsChange}
           />
-        </>}
+       </>
+      }
     </>
   );
 };
