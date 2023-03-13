@@ -74,7 +74,7 @@ export default function Hotel() {
             isChange = {isChange}
             setIsChange = {setIsChange}
           />
-       </>
+        </>
       }
     </>
   );
