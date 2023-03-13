@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import BoxHotels from '../../../components/Hotels/BoxHotels';
 import Booking from '../../../components/Hotels/Booking';
 import { getTicket } from '../../../services/ticketApi';
 import useToken from '../../../hooks/useToken';
-import { Subtitle, Title, Loading } from '../../../components/Hotels';
+import { Subtitle, OnlySubtitle, Title, Loading } from '../../../components/Hotels';
 
-export default function Hotel(isClicked, setIsClicked) {
+export default function Hotel() {
   const [hotelId, setHotelId] = useState();
-  const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
+  const [bookingStatus, setBookingStatus] = useState(null); //options: available, reserved, unpaid, unavailable
   const [hotels, setHotels] = useState([]);
   const [roomData, setRoomData] = useState({});
   const [isChange, setIsChange] = useState(false);
@@ -42,14 +43,10 @@ export default function Hotel(isClicked, setIsClicked) {
     <>
       <Title>Escolha de hotel e quarto</Title>
       {bookingStatus === 'unpaid' &&
-        <>
-          <Subtitle>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.</Subtitle>
-        </>
+        <OnlySubtitle>Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.</OnlySubtitle>
       }
       {bookingStatus === 'unavailable' &&
-        <>
-          <Subtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</Subtitle>
-        </>
+        <OnlySubtitle>Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades.</OnlySubtitle>
       }
       {bookingStatus === 'available' &&
        <>

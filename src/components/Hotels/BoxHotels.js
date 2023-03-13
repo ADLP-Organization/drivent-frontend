@@ -5,52 +5,22 @@ import { getHotelsList } from '../../services/hotelApi';
 import CardHotel from './CardHotel';
 import { AllHotels, Subtitle } from '../Hotels';
 import BoxRooms from './BoxRooms';
-import { getTicket } from '../../services/ticketApi';
 
-export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData, isChange, selectedRoom, setSelectedRoom }) {
+export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData, isChange }) {
   const token = useToken();
   const [isClicked, setIsClicked] = useState(null);
-  const [capacity, setCapacity] = useState([]);
-  const [roomTypes, setRoomTypes] = useState([]); 
-  //const [selectedRoom, setSelectedRoom] = useState(null);
-  let result;
-
-  function tipos() {
-    const quartos = (result.roomTypes.filter(hotel => hotel.hotelId === 1));
-    let tiposQuartos = '';
-    if (quartos.some(quarto => quarto.capacity === 1)) tiposQuartos += 'Single';
-    if (quartos.some(quarto => quarto.capacity === 2)) tiposQuartos += ', Double';
-    if (quartos.some(quarto => quarto.capacity === 3)) tiposQuartos += ', Triple';
-
-    return tiposQuartos;
-  }
-
-  function ocupados() {
-    let ocupacao = 0;
-    const quartos  = result.hotelsList.filter(hotel => hotel.id === 1).map((quarto) => { return quarto.Rooms;} )[0];
-    quartos.map((quarto) => ocupacao +=(quarto.Booking.length));
-
-    return ocupacao;
-  }
+  const [roomTypes, setRoomTypes] = useState(null);
+  const [capacity, setCapacity] = useState(null);
 
   useEffect(() => {
     async function HotelsList() {
       try {
-        const checkTicket = await getTicket(token);
-        //console.log(checkTicket);
-        //if - não pago
-        result = await getHotelsList(token);
+        const result = await getHotelsList(token);
         setHotels(result.hotelsList);
-        setCapacity(result.capacity);
         setRoomTypes(result.roomTypes);
-        //setBookingData(hotelId)
-
-        const capacidade = ((result.capacity.filter(hotel => hotel.hotelId === 1))[0]._sum.capacity);
-        const tipo = tipos();
-        const ocupado = ocupados(); 
-  
+        setCapacity(result.capacity);
         setBookingStatus('available');
-        // console.log(result);
+        console.log(result);
       } catch (err) {
         toast('Ops! Algo deu errado.');
         console.log(err.message);
@@ -62,7 +32,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
   return (
     <>
       <AllHotels>
-        {hotels !== null && 
+        {(hotels !== null && roomTypes !== null && capacity !== null) && 
         hotels.map((h) =>
           <CardHotel 
             key={h.id}
@@ -72,6 +42,9 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
             setHotelId={setHotelId}
             setIsClicked= {setIsClicked}
             isClicked = {isClicked}
+            roomTypes = {roomTypes}
+            capacity = {capacity}
+            hotels = {hotels}
           />
         )}
       </AllHotels>
@@ -81,6 +54,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
           <BoxRooms
             setBookingStatus={setBookingStatus}
             setRoomData = {setRoomData}
+            hotelId = {isClicked}
           /> 
         </>:
         null}
@@ -90,6 +64,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
           <BoxRooms
             setBookingStatus={setBookingStatus}
             setRoomData = {setRoomData}
+            hotelId = {isClicked}
           /> 
         </>:
         null}
