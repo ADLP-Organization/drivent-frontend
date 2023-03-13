@@ -61,7 +61,10 @@ height: 37px;
 width: 182px;
 border-radius: 4px;
 background-color: #E0E0E0;
+display: flex;
+justify-content: center;
+align-items: center;
 cursor: pointer;
-
+margin-top: 30px;
 `;
 
