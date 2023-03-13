@@ -6,7 +6,7 @@ export default function SelectionHotelType({ info, setTicketStatus, setTicketTyp
   const [hotelOptonSelected, setHotelOptonSelected] = useState(null);
   const [selectButton1, setSelectButton1] = useState(false);
   const [selectButton2, setSelectButton2] = useState(false);
-  const presential = info.filter(option => option.isRemote === false)
+  const presential = info.filter(option => option.isRemote === false);
   const hotelPrice = Math.abs((presential[0].price - presential[1].price));
 
   function selectionType1() {

@@ -1,14 +1,31 @@
 import styled from 'styled-components';
-import { BsPerson, BsPersonFill } from 'react-icons/bs';
 import { useState } from 'react';
 import { postBooking } from '../../services/hotelApi';
 import useToken from '../../hooks/useToken';
+import { useEffect } from 'react';
+import { getRoomsByHotel } from '../../services/hotelApi';
+import Rooms from './Rooms';
 
-export default function BoxRooms({ setBookingStatus, setRoomData, hotels } ) {
-  const [clickButton, setClickButton] = useState(false);
+export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
   const token = useToken();
+  const [rooms, setRooms] = useState([]);
+  const [isClicked, setIsClicked] = useState(null);
+  console.log();
+  useEffect(() => {
+    async function HotelsList() {
+      try {
+        const result = await getRoomsByHotel(token/* , hotelId */);
+        setRooms(result.Rooms);
+        console.log(result);
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    HotelsList();
+  }, []);
 
-  async function createBooking(id, roomInfo) {
+  /* async function createBooking(id, roomInfo) {
+
     const booking =  {
       'roomId': id
     };
@@ -27,26 +44,15 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels } ) {
       toast('Ops, deu ruim');
     }
   }
-
+ */
   return (
-    <RoomContainer>
-      <Room clickButton = {clickButton} onClick={() => createBooking(1)}><a>101</a><BsPersonFill size={30} color={'#FF4791'}/></Room>
-      <Room><a>102</a><BsPerson size={30}/></Room>
-      <Room><a>103</a><BsPerson size={30}/></Room>
-      <Room><a>104</a><BsPerson size={30}/></Room>
-      <Room><a>201</a><BsPerson size={30}/></Room>
-      <Room><a>202</a><BsPerson size={30}/></Room>
-      <Room><a>203</a><BsPerson size={30}/></Room>
-      <Room><a>204</a><BsPerson size={30}/></Room>
-      <Room><a>101</a><BsPerson size={30}/></Room>
-      <Room><a>102</a><BsPerson size={30}/></Room>
-      <Room><a>103</a><BsPerson size={30}/></Room>
-      <Room><a>104</a><BsPerson size={30}/></Room>
-      <Room><a>201</a><BsPerson size={30}/></Room>
-      <Room><a>202</a><BsPerson size={30}/></Room>
-      <Room><a>203</a><BsPerson size={30}/></Room>
-      <Room><a>204</a><BsPerson size={30}/></Room>
-    </RoomContainer>
+    <>
+      <RoomContainer>
+        {rooms.map((info) => <Rooms key={info.id} info={info} setRoomData={setRoomData} setIsClicked={setIsClicked} isClicked={isClicked} />)}
+      </RoomContainer>
+      <ButtonConfirmRoom>RESERVAR QUARTO</ButtonConfirmRoom>
+    </>
+
   );
 };
 
@@ -58,26 +64,10 @@ flex-direction: column;
 flex-wrap: wrap;
 `;
 
-const Room = styled.div`
-  height: 45px;
-  width: 190px;
-  border-radius: 10px;
-  border: 1px solid #CECECE;
-  display: flex;
-  align-items:center;
-  justify-content: space-between;
-  padding-right: 12.28px;
-  margin-bottom: 8px;
-  background-color: ${(prop) => (!prop.clickButton ? '#FFEED2' : '#FFFFFF')};
-  a{
-    height: 23px;
-    width: 35px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 23px;
-    text-align: center;
-    color: #454545;
-    margin-left:16px;
-  }
+const ButtonConfirmRoom = styled.div`
+height: 37px;
+width: 182px;
+border-radius: 4px;
+background-color: #E0E0E0;
 `;
+
