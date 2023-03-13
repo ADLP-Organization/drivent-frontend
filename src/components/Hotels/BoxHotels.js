@@ -6,7 +6,7 @@ import CardHotel from './CardHotel';
 import { AllHotels, Subtitle } from '../Hotels';
 import BoxRooms from './BoxRooms';
 
-export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData }) {
+export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHotels, setRoomData, isChange }) {
   const token = useToken();
   const [isClicked, setIsClicked] = useState(null);
   const [roomTypes, setRoomTypes] = useState(null);
@@ -20,6 +20,7 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
         setRoomTypes(result.roomTypes);
         setCapacity(result.capacity);
         setBookingStatus('available');
+        console.log(result);
       } catch (err) {
         toast('Ops! Algo deu errado.');
         console.log(err.message);
@@ -53,7 +54,15 @@ export default function BoxHotels({ setBookingStatus, hotels, setHotelId, setHot
           <BoxRooms
             setBookingStatus={setBookingStatus}
             setRoomData = {setRoomData}
-            hotels = {hotels}
+          /> 
+        </>:
+        null}
+      {isChange?
+        <>  
+          <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
+          <BoxRooms
+            setBookingStatus={setBookingStatus}
+            setRoomData = {setRoomData}
           /> 
         </>:
         null}
