@@ -1,6 +1,6 @@
 import { BsPerson, BsPersonFill } from 'react-icons/bs';
 
-export default function PersonIcons({ vacancies, placesOccupied, setColor }) {
+export default function PersonIcons({ roomId, vacancies, placesOccupied, setColor }) {
   let roomDescription = [];
 
   if (vacancies === 0) {

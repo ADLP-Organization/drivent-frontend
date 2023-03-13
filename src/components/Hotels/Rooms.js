@@ -14,27 +14,8 @@ export default function Rooms({ info, setRoomData, setIsClicked, isClicked }) {
 
   function selectRoom() {
     setIsClicked(info.id);
+    setRoomData(info);
   }
-
-  /* async function createBooking(id, roomInfo) {
-    const booking =  {
-      'roomId': id
-    };
-    try{
-      await postBooking(token, booking);
-      setRoomData({
-        name: '104',
-        capacity: 3,
-        hotelId: 1,
-        createdAt: '23-03-2022',
-        updatedAt: '23-03-2022',
-      });
-      setBookingStatus('reserved');
-    } catch(err) {
-      // eslint-disable-next-line no-undef
-      toast('Ops, deu ruim');
-    }
-  } */
 
   return (
     <>
