@@ -6,7 +6,6 @@ import PersonIcons from './PersonIcons';
 
 export default function Rooms({ info, setRoomData, setIsClicked, isClicked }) {
   const [roomId, setRoomId] = useState();
-  const [fillBlack, setFillBlack] = useState(true);
   const token = useToken();
   const [color, setColor] = useState('#FFFFFF');
   const capacity = info.capacity;

@@ -67,5 +67,7 @@ height: 37px;
 width: 182px;
 border-radius: 4px;
 background-color: #E0E0E0;
+display: flex;
+
 `;
 
