@@ -10,6 +10,7 @@ export default function Hotel() {
   const [bookingStatus, setBookingStatus] = useState('available'); //options: available, selected, reserved, unpaid, unavailable
   const [hotels, setHotels] = useState([]);
   const [roomData, setRoomData] = useState({});
+  const [isChange, setIsChange] = useState(false);
   const token =  useToken();
 
   useEffect( async() => {
@@ -68,9 +69,12 @@ export default function Hotel() {
           <Booking
             hotels = {hotels}
             roomData = {roomData}
+            setBookingStatus={setBookingStatus}
+            setRoomData={setRoomData}
+            isChange = {isChange}
+            setIsChange = {setIsChange}
           />
         </>
-      }
     </>
   );
 };

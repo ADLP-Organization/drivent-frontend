@@ -25,6 +25,7 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
   }, []);
 
   /* async function createBooking(id, roomInfo) {
+
     const booking =  {
       'roomId': id
     };
@@ -51,6 +52,7 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotels }) {
       </RoomContainer>
       <ButtonConfirmRoom>RESERVAR QUARTO</ButtonConfirmRoom>
     </>
+
   );
 };
 
