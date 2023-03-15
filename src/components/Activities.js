@@ -46,3 +46,29 @@ height: 50vh;
     height: 170px;
   }
 `;
+
+export const Button = styled.button`
+  width: 162px;
+  height: 37px;
+  border: none;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ccc;
+  }
+
+  & > *:not(:last-child) {
+    margin-bottom: 4px;
+  }
+
+  & > *:first-child {
+    font-size: 14px;
+    color: #000000;
+  }
+
+  @media (max-width: 600px) {
+    height: 80px;
+  }
+`;
