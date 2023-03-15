@@ -16,8 +16,8 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
       try {
         const result = await getRoomsByHotel(token, hotelId);
         setRooms(result.Rooms);
-        //console.log(result);
       } catch (err) {
+        // eslint-disable-next-line
         console.log(err.message);
       }
     }
@@ -34,8 +34,9 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
         await postBooking(token, booking);
         setBookingStatus('reserved');
       } catch(err) {
-        // eslint-disable-next-line no-undef
         toast('Ops, Algo deu errado');
+        // eslint-disable-next-line
+        console.log(err.message);
       }
     }else {
       upsertBooking(token, booking, existentBooking.id);
