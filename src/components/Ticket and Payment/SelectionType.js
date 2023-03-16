@@ -67,7 +67,7 @@ export default function SelectionTicketType({ setTicketStatus, ticketTypeData, s
       setIsOnline(false);
     }
   }
-
+  console.log(info);
   if (info[0]) {
     return (<Container>
       <Title>Ingresso e pagamento</Title>

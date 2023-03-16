@@ -53,6 +53,7 @@ export default function BoxHotels({ setBookingStatus, bookingStatus, hotels, set
           <Subtitle>Ótima pedida! Agora escolha o seu quarto:</Subtitle>
           <BoxRooms
             setBookingStatus={setBookingStatus}
+            bookingStatus={bookingStatus}
             setRoomData = {setRoomData}
             hotelId = {isClicked}
           /> 

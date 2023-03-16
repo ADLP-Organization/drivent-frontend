@@ -6,7 +6,7 @@ import { getRoomsByHotel, getBookingList, postBooking, upsertBooking  } from '..
 import Rooms from './Rooms';
 import { toast } from 'react-toastify';
 
-export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
+export default function BoxRooms({ setBookingStatus, setRoomData, hotelId, bookingStatus }) {
   const token = useToken();
   const [rooms, setRooms] = useState([]);
   const [isClickedRoom, setIsClickedRoom] = useState(null);
@@ -16,13 +16,12 @@ export default function BoxRooms({ setBookingStatus, setRoomData, hotelId }) {
       try {
         const result = await getRoomsByHotel(token, hotelId);
         setRooms(result.Rooms);
-        //console.log(result);
       } catch (err) {
         console.log(err.message);
       }
     }
     HotelsList();
-  }, [hotelId]);
+  }, [hotelId, bookingStatus]);
   
   async function reserve() {
     const booking =  {
