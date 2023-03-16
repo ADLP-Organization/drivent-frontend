@@ -22,8 +22,7 @@ export default function CardHotel({ id, image, name, setHotelId, setIsClicked, i
   };
 
   function busyRooms(id) {
-    console.log(id);
-    capacity = ((capacity.filter(hotel => hotel.hotelId === id))[0]._sum.capacity);
+    if (capacity) capacity = ((capacity.filter(hotel => hotel.hotelId === id))[0]._sum.capacity); 
     let occupancy  = 0;
     const rooms  = hotels.filter(hotel => hotel.id === id).map((room) => { return room.Rooms;} )[0];
     rooms.map((room) => occupancy  += (room.Booking.length));
