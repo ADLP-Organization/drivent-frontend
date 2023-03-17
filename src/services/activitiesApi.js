@@ -9,8 +9,8 @@ export async function getEventDays(token) {
   return response.data;
 };
 
-export async function getActivitiesByDayId(token) {
-  const response = await api.get('/activities/days/:dayId', {
+export async function getActivitiesByDayId(token, dayId) {
+  const response = await api.get(`/activities/days/${dayId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -18,7 +18,7 @@ export async function getActivitiesByDayId(token) {
   return response.data;
 };
 
-export async function postActivity(body, token) {
+export async function postActivity(token, body) {
   const response = await api.post('/activities', body, {
     headers: {
       Authorization: `Bearer ${token}`,
