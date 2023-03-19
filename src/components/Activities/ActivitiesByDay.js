@@ -2,7 +2,7 @@ import useToken from '../../hooks/useToken';
 import { getActivitiesByDayId, postActivity } from '../../services/activitiesApi';
 import styled from 'styled-components';
 
-export default function ActivitiesByDay() {
+export default function ActivitiesByDay({ dayId }) {
   const token = useToken();
   async function activityEnroll(activityId) {
     const body = {
@@ -16,10 +16,11 @@ export default function ActivitiesByDay() {
     //status do retorno definirá se haverá mensagem de choque de horário
   }
   async function getActivities() {
-    return await getActivitiesByDayId(token, 1 /**dayId */);
+    return await getActivitiesByDayId(token, dayId);
   }
   getActivities();
   return (
+
     <ActivitiesContainer>
       <ActivitiesLocal>
         <Title>Auditório Principal</Title>
