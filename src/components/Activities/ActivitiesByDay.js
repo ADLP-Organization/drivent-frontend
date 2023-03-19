@@ -1,22 +1,34 @@
 import useToken from '../../hooks/useToken';
 import { getActivitiesByDayId, postActivity } from '../../services/activitiesApi';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 
 export default function ActivitiesByDay({ dayId }) {
   const token = useToken();
-  async function activityEnroll(activityId) {
+  async function activityEnroll(activityId, hourStart, hourEnd) {
     const body = {
       activityId: activityId,
-      hourStart: 9,
-      hourEnd: 10
+      hourStart: hourStart,
+      hourEnd: hourEnd
     };
 
     const r = await postActivity(token, body);
     console.log(r);
-    //status do retorno definirá se haverá mensagem de choque de horário
+    if(r === 'Choose activities that take place at different times') {
+      toast('Essa atividade ocorrerá no mesmo horário que outras atividades em que você está inscrito!');
+      return;
+    }else if(r === 'Canceled activity subscription') {
+      toast('Inscrição cancelada.');
+      return;
+    }else if(r === 'Enrollment in the activity done successfully') {
+      toast('Inscrição realizada com sucesso.');
+      return;
+    }
   }
   async function getActivities() {
-    return await getActivitiesByDayId(token, dayId);
+    const r = await getActivitiesByDayId(token, dayId);
+    console.log(r);
+    return r;
   }
   getActivities();
   return (
@@ -25,10 +37,10 @@ export default function ActivitiesByDay({ dayId }) {
       <ActivitiesLocal>
         <Title>Auditório Principal</Title>
         <SelectActivity>
-          <Activity onClick={() => activityEnroll(1)}>
+          <Activity onClick={() => activityEnroll(1 /**activityId */, 10/**hourStart */, 11/**hourEnd */)}>
             <ActivityContent>
               <SubTitle>Minecraft: montando o PC ideal</SubTitle>
-              <EventTime>09:00 - 10:00</EventTime>
+              <EventTime>10:00 - 11:00</EventTime>
             </ActivityContent>
           </Activity>
         </SelectActivity>
