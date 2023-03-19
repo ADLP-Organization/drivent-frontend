@@ -6,24 +6,24 @@ import { OnlySubtitle, Title, Loading } from '../../../components/Activities';
 import ActivitiesByDay from '../../../components/Activities/ActivitiesByDay';
 
 export default function Activities() {
-  const [status, setStatus] = useState(null); //options: unnecessary, unpaid, available
+  const [status, setStatus] = useState('available'); //options: unnecessary, unpaid, available
   const token =  useToken();
 
-  useEffect( async() => {
-    const ticket = await getTicket( token );
-    if (ticket.TicketType.isRemote) {
-      setStatus('unnecessary');
-      return;
-    }
-    if ((!ticket.TicketType.isRemote) && (ticket.status === 'PAID')) {
-      setStatus('available'); 
-      return;
-    }
-    if (ticket.status === 'RESERVED') {
-      setStatus('unpaid'); 
-      return;
-    }
-  }, []);
+  // useEffect( async() => {
+  //   const ticket = await getTicket( token );
+  //   if (ticket.TicketType.isRemote) {
+  //     setStatus('unnecessary');
+  //     return;
+  //   }
+  //   if ((!ticket.TicketType.isRemote) && (ticket.status === 'PAID')) {
+  //     setStatus('available'); 
+  //     return;
+  //   }
+  //   if (ticket.status === 'RESERVED') {
+  //     setStatus('unpaid'); 
+  //     return;
+  //   }
+  // }, []);
 
   if (status === null) {
     return (
