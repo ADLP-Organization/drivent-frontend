@@ -1,22 +1,31 @@
 import useToken from '../../hooks/useToken';
-import { postActivity } from '../../services/activitiesApi';
+import { getActivitiesByDayId, postActivity } from '../../services/activitiesApi';
 import styled from 'styled-components';
 
-export default function ActivitiesByDay() {
+export default function ActivitiesByDay({ dayId }) {
   const token = useToken();
-  async function testeInscreverEmAtividade() {
+  async function activityEnroll(activityId) {
     const body = {
-
+      activityId: activityId,
+      hourStart: 9,
+      hourEnd: 10
     };
 
-    await postActivity();
+    const r = await postActivity(token, body);
+    console.log(r);
+    //status do retorno definirá se haverá mensagem de choque de horário
   }
+  async function getActivities() {
+    return await getActivitiesByDayId(token, dayId);
+  }
+  getActivities();
   return (
+
     <ActivitiesContainer>
       <ActivitiesLocal>
         <Title>Auditório Principal</Title>
         <SelectActivity>
-          <Activity>
+          <Activity onClick={() => activityEnroll(1)}>
             <ActivityContent>
               <SubTitle>Minecraft: montando o PC ideal</SubTitle>
               <EventTime>09:00 - 10:00</EventTime>
@@ -87,6 +96,11 @@ border-radius: 5px;
 background-color: #F1F1F1;
 margin-top: 10px;
 margin-left: 10px;
+
+&:hover {
+  background-color: #ccc;
+  cursor: pointer;cursor: pointer;
+}
 `;
 
 const ActivityContent = styled.div`
@@ -120,6 +134,7 @@ line-height: 14px;
 letter-spacing: 0em;
 text-align: left;
 margin-top: 6px;
+`;
 
-
+const Capacity = styled.div`
 `;
