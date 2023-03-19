@@ -1,13 +1,18 @@
 import styled from 'styled-components';
-import useToken from '../../hooks/useToken';
 
 export default function Day({ info, setIsClicked, isClicked }) {
+  //Nessas linhas a data é transformada em milessegundos 
   const dateInMs = new Date(info.date);
   const daysOfTheWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+
+  //Nessas linhas são obtidos o dia da semana, dia do mês e o mês a partir da data em milessegundos
   const dayOfWeek = daysOfTheWeek[dateInMs.getDay()];
   const dayOfTheMonth =  dateInMs.getDate() >= 10? dateInMs.getDate(): ('0' + dateInMs.getDate() );
   const monthOfTheYear = dateInMs.getMonth() + 1 >= 10  ? dateInMs.getMonth() + 1 : ('0' + (dateInMs.getMonth() +1) );
+  
+  //Nessa linha é construida a string da data que será exibida
   const data = `${dayOfWeek}, ${dayOfTheMonth}/${monthOfTheYear}`;
+
   function selectDay() {
     setIsClicked(info.id);
   }

@@ -1,45 +1,55 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Day from './Day';
-import { Subtitle } from '../Hotels';
+import { Subtitle, Loading  } from '../Hotels';
 import ActivitiesByDay from './ActivitiesByDay';
+import useToken from '../../hooks/useToken';
+import { getDays } from '../../services/activitiesApi';
 
 export default function EventDays() {
+  const token = useToken();
   const [isClicked, setIsClicked] = useState(null);
+  const [eventDays, setEventDays] = useState(null);
 
-  const days = [{
-    id: 1,
-    eventId: 1,
-    date: '2023-01-07 03:00:00',
-    createdAt: '2023-03-19 11:54:38.854',
-    updatedAt: '2023-03-19 11:54:38.855',
-  },
-  {
-    id: 2,
-    eventId: 1,
-    date: '2023-10-08 03:00:00',
-    createdAt: '2023-03-19 11:54:38.854',
-    updatedAt: '2023-03-19 11:54:38.855',
-  },
-  {
-    id: 3,
-    eventId: 1,
-    date: '2023-12-25 03:00:00',
-    createdAt: '2023-03-19 11:54:38.854',
-    updatedAt: '2023-03-19 11:54:38.855',
-  },
-  ];
-  console.log('dayId: ', isClicked);
-  return (
-    <>
-      <Subtitle>Primeiro, filtre pelo dia do evento:</Subtitle>
-      <Container>
-        {days.map((info) => <Day key={info.id} info={info} setIsClicked={setIsClicked} isClicked={isClicked} />)}
-      </Container>
-      {isClicked ? <ActivitiesByDay dayId={isClicked}/>: null}
-    </>
+  useEffect(() => {
+    async function DaysList() {
+      try {
+        const result = await getDays(token);
+        console.log(result);
+        setEventDays(result);
+      } catch (err) {
+        // eslint-disable-next-line no-undef
+        toast('Ops! Algo deu errado.');
+        // eslint-disable-next-line
+        console.log(err.message);
+      }
+    }
+    DaysList();
+  }, []);
 
-  );
+  if (eventDays === null) {
+    return (
+      <>
+        <Subtitle>Primeiro, filtre pelo dia do evento:</Subtitle>
+        <Loading>
+          <img src='https://cdn.pixabay.com/animation/2022/10/11/03/16/03-16-39-160_512.gif' alt={'Loading...'}></img>
+        </Loading>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Subtitle>Primeiro, filtre pelo dia do evento:</Subtitle>
+  
+        <Container>
+          {eventDays.map((info) => <Day key={info.id} info={info} setIsClicked={setIsClicked} isClicked={isClicked} />)}
+        </Container>
+        {isClicked ? <ActivitiesByDay dayId={isClicked}/>: null}
+  
+      </>
+  
+    );
+  }
 };
 
 const Container = styled.div`

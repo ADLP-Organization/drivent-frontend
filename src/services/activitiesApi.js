@@ -26,3 +26,12 @@ export async function postActivity(token, body) {
   });
   return response.data;
 };
+
+export async function getDays(token) {
+  const response = await api.get('/activities/days', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
