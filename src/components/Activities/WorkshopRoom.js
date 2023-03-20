@@ -1,44 +1,49 @@
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import useToken from '../../hooks/useToken';
 import { postActivity } from '../../services/activitiesApi';
-import { CgEnter } from 'react-icons/cg';
-import { CapacityIconOpen, CapacityIconSoldOff } from './CapacityIcons';
+import { CapacityIconOpen, CapacityIconSoldOff, RegisteredIcon } from './CapacityIcons';
 
-export default function MainActivity({ info, setData }) {
+export default function WorkshopRoom({ info, userActivitiesIds, click, setClick, setData }) {
   const activitieDuration = info.hourEnd - info.hourStart;
-  console.log(activitieDuration);
   const token = useToken();
+  
   async function activityEnroll(activityId, hourStart, hourEnd) {
     const body = {
       activityId: activityId,
       hourStart: hourStart,
       hourEnd: hourEnd
     };
-
     const r = await postActivity(token, body);
-    console.log(r);
+
     if (r === 'Choose activities that take place at different times') {
       toast('Essa atividade ocorrerá no mesmo horário que outras atividades em que você está inscrito!');
       return;
     } else if (r === 'Canceled activity subscription') {
+      setClick(!click);
       toast('Inscrição cancelada.');
       return;
     } else if (r === 'Enrollment in the activity done successfully') {
+      setClick(!click);
       toast('Inscrição realizada com sucesso.');
       return;
     }
   }
-  /**
-    <Enroll>
-      <CgEnter size={25} color={'#078632'}/>
-      <h1>{info.capacity} vagas</h1>
-    </Enroll>
-   */
   
   if(info.localId === 3) {
-    if(info.capacity > 0) {
+    if(userActivitiesIds.includes(info.id)) {
+      return (
+        <RegisteredActivity onClick={() => activityEnroll(info.id, info.hourStart, info.hourEnd)} activitieDuration={activitieDuration}>
+          <ActivityContent>
+            <InfosActivity>
+              <SubTitle>{info.name}</SubTitle>
+              <EventTime>{info.hourStart}:00 - {info.hourEnd}:00</EventTime>
+            </InfosActivity>
+            <RegisteredIcon vacancies={info.capacity}/>
+          </ActivityContent>
+        </RegisteredActivity>   
+      );
+    }else if(info.capacity > 0) {
       return (
         <Activity onClick={() => activityEnroll(info.id, info.hourStart, info.hourEnd)} activitieDuration={activitieDuration}>
           <ActivityContent>
@@ -52,7 +57,7 @@ export default function MainActivity({ info, setData }) {
       );
     }else {
       return (
-        <Activity activitieDuration={activitieDuration}>
+        <ActivitySoldOut activitieDuration={activitieDuration}>
           <ActivityContent>
             <InfosActivity>
               <SubTitle>{info.name}</SubTitle>
@@ -60,7 +65,7 @@ export default function MainActivity({ info, setData }) {
             </InfosActivity>
             <CapacityIconSoldOff vacancies={info.capacity}/>
           </ActivityContent>
-        </Activity>   
+        </ActivitySoldOut>   
       );
     }
   } else { return <></>; }
@@ -81,6 +86,31 @@ margin-left: 10px;
 }
 `;
 
+const RegisteredActivity = styled.div`
+height: ${(props) => (props.activitieDuration * 79)}px;
+width: 265px;
+border-radius: 5px;
+background-color: #D0FFDB;
+margin-top: 10px;
+padding-top: 10px;
+margin-left: 10px;
+
+&:hover {
+  background-color: #ccc;
+  cursor: pointer;cursor: pointer;
+}
+`;
+
+const ActivitySoldOut = styled.div`
+height: ${(props) => (props.activitieDuration * 79)}px;
+width: 265px;
+border-radius: 5px;
+background-color: #F1F1F1;
+margin-top: 10px;
+padding-top: 10px;
+margin-left: 10px;
+`; 
+
 const ActivityContent = styled.div`
 display: flex;
 height: 95%;
@@ -98,26 +128,6 @@ flex-direction: column;
 
 `;
 
-const Enroll = styled.div`
-height: 100%;
-width: 59px;
-display: flex;
-flex-direction:column;
-justify-content: center;
-align-items: center;
-
-h1{
-  font-family: 'Roboto', sans-serif;
-font-size: 10px;
-font-weight: 400;
-line-height: 11px;
-letter-spacing: 0em;
-text-align: left;
-color: #078632;
-
-}
-`;
-
 const SubTitle = styled.div`
 width: 190px;
 font-family: 'Roboto', sans-serif;
@@ -126,6 +136,7 @@ font-weight: 700;
 line-height: 14px;
 letter-spacing: 0em;
 text-align: left;
+
 `;
 
 const EventTime = styled.div`
@@ -139,4 +150,3 @@ letter-spacing: 0em;
 text-align: left;
 margin-top: 10px;
 `;
-

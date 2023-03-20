@@ -35,3 +35,12 @@ export async function getDays(token) {
   });
   return response.data;
 };
+
+export async function getUserActivities(token) {
+  const response = await api.get('/activities/userActivities', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};

@@ -5,25 +5,25 @@ import { CgEnter } from 'react-icons/cg';
 export function CapacityIconOpen(props) {
   return( <Enroll>
     <CgEnter size={25} color={'#078632'}/>
-    <OpenText>{props.vacancies} vagas</OpenText>
+    <GreenText>{props.vacancies} vagas</GreenText>
   </Enroll>);
 }
 
 export function CapacityIconSoldOff(props) {
   return( <Enroll>
     <BsXCircle size={25} color={'#CC6666'}/>
-    <SoldOfText>Esgotado</SoldOfText>
+    <RedText>Esgotado</RedText>
   </Enroll>);
 }
 
 export function RegisteredIcon(props) {
   return( <Enroll>
     <BsCheckCircle size={25} color={'#078632'}/>
-    <SoldOfText>Inscrito</SoldOfText>
+    <GreenText>Inscrito</GreenText>
   </Enroll>);
 } 
 
-const SoldOfText = styled.h1`
+const RedText = styled.h1`
 font-family: 'Roboto', sans-serif;
 font-size: 10px;
 font-weight: 400;
@@ -33,7 +33,7 @@ text-align: left;
 color: #CC6666;
 `;
 
-const OpenText = styled.h1`
+const GreenText = styled.h1`
 font-family: 'Roboto', sans-serif;
 font-size: 10px;
 font-weight: 400;
