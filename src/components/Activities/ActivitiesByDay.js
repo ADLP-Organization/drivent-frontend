@@ -1,7 +1,6 @@
 import useToken from '../../hooks/useToken';
-import { getActivitiesByDayId, postActivity } from '../../services/activitiesApi';
+import { getActivitiesByDayId, getUserActivities } from '../../services/activitiesApi';
 import styled from 'styled-components';
-import { toast } from 'react-toastify';
 import MainActivity from './MainActivity';
 import { useEffect, useState } from 'react';
 import SecondaryActivities from './SecondaryActivities';
@@ -10,38 +9,46 @@ import WorkshopRoom from './WorkshopRoom';
 export default function ActivitiesByDay({ dayId }) {
   const token = useToken();
   const [data, setData] = useState([]);
+  const [ userActivitiesIds, setUserActivitiesIds ] = useState([]);
+  const [ click, setClick ] = useState(false);
 
   useEffect(() => {
     async function getActivities() {
       const r = await getActivitiesByDayId(token, dayId);
-      setData(r);
+      const userActivities = await getUserActivities(token);
+      let userActivitiesIdsArr = [];
+
+      userActivities.map((userActivity) => {
+        userActivitiesIdsArr.push(userActivity.activityId);
+      });
       
+      setUserActivitiesIds(userActivitiesIdsArr);
+      setData(r);
       return r;
     }
     getActivities();
-  }, [dayId]);
-  console.log(data);
+  }, [dayId, click]);
   return (
     <>
       <ActivitiesContainer>
         <ActivitiesLocal>
           <Title>Auditório Principal</Title>
           <SelectActivity>
-            {data.map((info) => <MainActivity info={info} setData={setData}/>)}
+            {data.map((info) => <MainActivity info={info} userActivitiesIds={userActivitiesIds} click={click} setClick={setClick} setData={setData}/>)}
           </SelectActivity>
         </ActivitiesLocal>
     
         <ActivitiesLocal>
           <Title>Auditório Lateral</Title>
           <SelectActivity>
-            {data.map((info) => <SecondaryActivities info={info} setData={setData}/>)}
+            {data.map((info) => <SecondaryActivities info={info} userActivitiesIds={userActivitiesIds} click={click} setClick={setClick} setData={setData}/>)}
           </SelectActivity>
         </ActivitiesLocal>
       
         <ActivitiesLocal>
           <Title>Sala de Workshop</Title>
           <SelectActivity>
-            {data.map((info) => <WorkshopRoom info={info} setData={setData}/>)}
+            {data.map((info) => <WorkshopRoom info={info} userActivitiesIds={userActivitiesIds} click={click} setClick={setClick} setData={setData}/>)}
           </SelectActivity>
         </ActivitiesLocal>
       </ActivitiesContainer>     
