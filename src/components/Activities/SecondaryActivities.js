@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useToken from '../../hooks/useToken';
 import { postActivity } from '../../services/activitiesApi';
 import { CgEnter } from 'react-icons/cg';
+import { CapacityIconOpen, CapacityIconSoldOff } from './CapacityIcons';
 
 export default function MainActivity({ info, setData }) {
   const activitieDuration = info.hourEnd - info.hourStart;
@@ -31,20 +32,31 @@ export default function MainActivity({ info, setData }) {
   }
   
   if(info.localId === 2) {
-    return (
-      <Activity onClick={() => activityEnroll(info.id, info.hourStart, info.hourEnd)} activitieDuration={activitieDuration}>
-        <ActivityContent>
-          <InfosActivity>
-            <SubTitle>{info.name}</SubTitle>
-            <EventTime>{info.hourStart}:00 - {info.hourEnd}:00</EventTime>
-          </InfosActivity>
-          <Enroll>
-            <CgEnter size={25} color={'#078632'}/>
-            <h1>{info.capacity} vagas</h1>
-          </Enroll>
-        </ActivityContent>
-      </Activity>   
-    );
+    if(info.capacity > 0) {
+      return (
+        <Activity onClick={() => activityEnroll(info.id, info.hourStart, info.hourEnd)} activitieDuration={activitieDuration}>
+          <ActivityContent>
+            <InfosActivity>
+              <SubTitle>{info.name}</SubTitle>
+              <EventTime>{info.hourStart}:00 - {info.hourEnd}:00</EventTime>
+            </InfosActivity>
+            <CapacityIconOpen vacancies={info.capacity}/>
+          </ActivityContent>
+        </Activity>   
+      );
+    }else {
+      return (
+        <Activity activitieDuration={activitieDuration}>
+          <ActivityContent>
+            <InfosActivity>
+              <SubTitle>{info.name}</SubTitle>
+              <EventTime>{info.hourStart}:00 - {info.hourEnd}:00</EventTime>
+            </InfosActivity>
+            <CapacityIconSoldOff vacancies={info.capacity}/>
+          </ActivityContent>
+        </Activity>   
+      );
+    }
   } else { return <></>; }
 }
 
