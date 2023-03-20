@@ -44,5 +44,4 @@ const DayContainer= styled.div`
       line-height: 16px;
       color: #000000;
     }
-}
 `;
