@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import useToken from '../../hooks/useToken';
 import { postActivity } from '../../services/activitiesApi';
-import { CgEnter } from 'react-icons/cg';
 import { CapacityIconOpen, CapacityIconSoldOff } from './CapacityIcons';
 
 export default function MainActivity({ info, setData }) {
