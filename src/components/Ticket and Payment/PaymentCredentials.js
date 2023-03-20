@@ -190,6 +190,7 @@ const SubmitButton = styled.button`
   color: #000000;
   &:hover {
     cursor: pointer;
+    background-color: #ccc;
   }
 `;
 

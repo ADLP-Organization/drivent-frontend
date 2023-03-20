@@ -113,7 +113,6 @@ color: #078632;
 `;
 
 const SubTitle = styled.div`
-height: 14px;
 width: 190px;
 font-family: 'Roboto', sans-serif;
 font-size: 12px;
@@ -121,6 +120,7 @@ font-weight: 700;
 line-height: 14px;
 letter-spacing: 0em;
 text-align: left;
+
 `;
 
 const EventTime = styled.div`
@@ -132,7 +132,7 @@ font-weight: 400;
 line-height: 14px;
 letter-spacing: 0em;
 text-align: left;
-margin-top: 6px;
+margin-top: 10px;
 `;
 
 const Capacity = styled.div`

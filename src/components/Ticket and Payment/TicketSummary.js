@@ -35,12 +35,13 @@ export default function TicketSummary({ setTicketStatus, ticketTypeData, setTick
 }
 
 const Button = styled.button`
-  width: 162px;
+  width: 170px;
   height: 37px;
   border: none;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   cursor: pointer;
+  background-color: #e0e0e0;
 
   &:hover {
     background-color: #ccc;

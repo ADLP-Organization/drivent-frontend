@@ -67,11 +67,18 @@ const ButtonConfirmRoom = styled.div`
 height: 37px;
 width: 182px;
 border-radius: 4px;
+box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+font-size: 14px;
+font-family: 'Roboto', sans-serif;
 background-color: #E0E0E0;
 display: flex;
 justify-content: center;
 align-items: center;
-cursor: pointer;
 margin-top: 30px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ccc;
+  }
 `;
 
