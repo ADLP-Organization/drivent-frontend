@@ -30,14 +30,16 @@ const DayContainer= styled.div`
     width: 131px;
     height: 37px;
     background-color: ${(props) => (props.isClicked === props.id? '#FFD37D' : '#E0E0E0')};
-    cursor: pointer;
+    
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
     border-radius: 4px;
+    
     &:hover {
-        background-color:'#ccc';
+        background-color: ${(props) => (props.isClicked === props.id? '#E0E0E0' : '#ccc')};
+        cursor: pointer;
     }
     span {
-      font-family: 'Roboto';
+      font-family: 'Roboto', sans-serif;
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
