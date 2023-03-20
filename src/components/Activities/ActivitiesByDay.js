@@ -19,7 +19,7 @@ export default function ActivitiesByDay({ dayId }) {
       return r;
     }
     getActivities();
-  }, []);
+  }, [dayId]);
   console.log(data);
   return (
     <>
@@ -73,5 +73,12 @@ const SelectActivity = styled.div`
 height: 391px;
 width: 288px;
 border: 1px solid #CECECE;
-
+overflow: scroll;
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 10px;
+}
 `;
