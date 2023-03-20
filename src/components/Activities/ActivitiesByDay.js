@@ -2,6 +2,7 @@ import useToken from '../../hooks/useToken';
 import { getActivitiesByDayId, postActivity } from '../../services/activitiesApi';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
+import { CapacityIconOpen } from './CapacityIcons';
 
 export default function ActivitiesByDay({ dayId }) {
   const token = useToken();
@@ -30,6 +31,15 @@ export default function ActivitiesByDay({ dayId }) {
     console.log(r);
     return r;
   }
+
+  /**
+   * if(capacity ===0){
+   * Activity sem onClick e <CapacityIconOpen/>
+   * }
+   * else{
+   * Activity com onClick e <CapacityIconSoldOff/>
+   * }
+   */
   getActivities();
   return (
 
@@ -42,6 +52,7 @@ export default function ActivitiesByDay({ dayId }) {
               <SubTitle>Minecraft: montando o PC ideal</SubTitle>
               <EventTime>10:00 - 11:00</EventTime>
             </ActivityContent>
+            <CapacityIconOpen/>
           </Activity>
         </SelectActivity>
       </ActivitiesLocal>
@@ -102,6 +113,7 @@ border: 1px solid #CECECE;
 `;
 
 const Activity = styled.div`
+display: flex;
 height: 79px;
 width: 265px;
 border-radius: 5px;
@@ -132,8 +144,6 @@ font-weight: 700;
 line-height: 14px;
 letter-spacing: 0em;
 text-align: left;
-
-
 `;
 
 const EventTime = styled.div`
@@ -146,7 +156,4 @@ line-height: 14px;
 letter-spacing: 0em;
 text-align: left;
 margin-top: 6px;
-`;
-
-const Capacity = styled.div`
 `;
