@@ -1,34 +1,55 @@
 import styled from 'styled-components';
-import { BsBoxArrowInRight, BsXCircle } from 'react-icons/bs';
+import { BsCheckCircle, BsXCircle } from 'react-icons/bs';
+import { CgEnter } from 'react-icons/cg';
 
-export function CapacityIconOpen(vacancies) {
-  return( <Box>
-    <BsBoxArrowInRight/>
-  </Box>);
+export function CapacityIconOpen(props) {
+  return( <Enroll>
+    <CgEnter size={25} color={'#078632'}/>
+    <OpenText>{props.vacancies} vagas</OpenText>
+  </Enroll>);
 }
-//capacityIconSoldOff
-//capacityIconOpen
-//<BsXCircle/>
-const Box = styled.div`
+
+export function CapacityIconSoldOff(props) {
+  return( <Enroll>
+    <BsXCircle size={25} color={'#CC6666'}/>
+    <SoldOfText>Esgotado</SoldOfText>
+  </Enroll>);
+}
+
+export function RegisteredIcon(props) {
+  return( <Enroll>
+    <BsCheckCircle size={25} color={'#078632'}/>
+    <SoldOfText>Inscrito</SoldOfText>
+  </Enroll>);
+} 
+
+const SoldOfText = styled.h1`
+font-family: 'Roboto', sans-serif;
+font-size: 10px;
+font-weight: 400;
+line-height: 11px;
+letter-spacing: 0em;
+text-align: left;
+color: #CC6666;
+`;
+
+const OpenText = styled.h1`
+font-family: 'Roboto', sans-serif;
+font-size: 10px;
+font-weight: 400;
+line-height: 11px;
+letter-spacing: 0em;
+text-align: left;
+color: #078632;
+`;
+
+const Enroll = styled.div`
+height: 100%;
+width: 59px;
 display: flex;
+flex-direction:column;
 justify-content: center;
-max-height: 80%;
-display: flex;
-
-border-left: 1px solid #CFCFCF;
-`;
-
-const Capacity = styled.div`
-background: pink;
-`;
-
-const Line = styled.div`
-
-width: 60px;
-height: 0px;
-margin-top: 0;
-margin-bottom: 0;
-border: 1px solid #CFCFCF;
-transform: rotate(-90deg);
+align-items: center;
+}
 `;
 
