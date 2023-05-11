@@ -1,5 +1,9 @@
 # drivent-front
 
+<p align="center" >
+  <img width="450" src="src/assets/drivent.gif"> 
+</p>
+
 Front-end for Driven.t, an event management solution.
 
 :)
